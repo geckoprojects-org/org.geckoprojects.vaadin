@@ -1,0 +1,27 @@
+header:
+  license:
+    spdx-id: Apache-2.0
+    copyright-owner: Data In Motion Consulting GmbH
+
+  paths-ignore:
+    - 'dist'
+    - 'licenses'
+    - '**/*.md'
+    - '**/.classpath'
+    - 'LICENSE'
+    - 'NOTICE'
+    - '.gitattributes'
+    - '.github/**'
+    - '.gitignore'
+    - 'cnf/release/**.*'
+    - '.gradle-wrapper/gradle-wrapper.properties'
+    - '.licenserc.yaml'
+    - '**/.project'
+    - '**/*.prefs'
+    - 'build.gradle'
+    - 'gradle.properties'
+    - 'gradlew'
+    - 'gradlew.bat'
+    - 'settings.gradle'
+ 
+  comment: always

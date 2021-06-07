@@ -1,0 +1,56 @@
+name: CI Build
+on:
+  push:
+    paths-ignore:
+    - 'docs/**'
+    - '.github/**/*docs*'
+    - '.github/**/*codeql*'
+    - '.github/*.yml'
+  pull_request:
+    paths-ignore:
+    - 'docs/**'
+    - '.github/**/*docs*'
+    - '.github/**/*codeql*'
+    - '.github/*.yml'
+
+env:
+  LC_ALL: en_US.UTF-8
+  GRADLE_OPTS: >-
+    -Dorg.gradle.parallel=true
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  Build_Matrix:
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, windows-latest ]
+        java: [ 11, 15 ]
+        runner: [ 'xvfb-run --auto-servernum {0}' ]
+    name: JDK${{ matrix.java }} ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    steps:
+    - name: Git Checkout
+      uses: actions/checkout@v2
+    - name: Gradle Wrapper Validation
+      uses: gradle/wrapper-validation-action@v1
+    - name: Set up Java ${{ matrix.java }}
+      uses: actions/setup-java@v1
+      with:
+        java-version: ${{ matrix.java }}
+    - name: Grant execute permission for gradlew
+      run: chmod +x ./gradlew
+    - name: Gradle version
+      run: ./gradlew --no-daemon --version
+    - name: Build with Gradle
+      run: ./gradlew build itest
+    - name: Upload Test Reports
+      if: ${{ always() && ((steps.build.outcome == 'success') || (steps.build.outcome == 'failure')) }}
+      uses: actions/upload-artifact@v2
+      with:
+        name: JDK${{ matrix.java }}_${{ matrix.os }}-test-reports
+        path: |
+          */generated/test-reports/*/TEST-*.xml
+

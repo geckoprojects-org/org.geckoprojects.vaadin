@@ -8,7 +8,6 @@
 /frontend/
 /node_modules/
 /pnpm-lock.yaml
-/test.txt
 /tsconfig.json
 /types.d.ts
 /webpack.config.js

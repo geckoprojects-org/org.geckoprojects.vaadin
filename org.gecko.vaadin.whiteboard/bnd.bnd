@@ -1,0 +1,35 @@
+-buildpath: \
+	osgi.annotation;version='7.0.0',\
+	osgi.core;version='7.0.0',\
+	osgi.cmpn;version='7.0.0',\
+	org.apache.felix.http.whiteboard;version=latest,\
+	org.apache.felix.http.servlet-api;version='1.1.2',\
+	com.vaadin.external.gentyref;version='1.2',\
+	org.jsoup;version=latest,\
+	slf4j.api;version=latest,\
+	org.gecko.vaadin.whiteboard.api;version=project,\
+	com.vaadin.flow.server;version=latest,\
+	com.vaadin.flow.data;version=latest,\
+	com.vaadin.flow.push;version=latest,\
+	com.vaadin.flow.html.components;version=latest,\
+	com.vaadin.flow.client;version=latest,\
+	com.vaadin.flow.component.button;version=latest
+	
+-baseline: *
+
+Bundle-Version: 1.0.0.SNAPSHOT
+Bundle-Name: Vaadin Whiteboard
+Bundle-Description: Gecko.io Vaadin Whiteboard, see [developers Documentation](development.md) for further information
+Bundle-DocURL: https://gitlab.com/gecko.io/geckoVaadin
+DynamicImport-Package: *
+	
+-privatepackage: \
+	org.gecko.vaadin.whiteboard.spi,\
+	org.gecko.vaadin.whiteboard.initializer,\
+	org.gecko.vaadin.whiteboard.servlet,\
+	org.gecko.vaadin.whiteboard.di,\
+	org.gecko.vaadin.whiteboard.registry
+	
+Export-Package: \
+	org.gecko.vaadin.whiteboard.annotations,\
+	org.gecko.vaadin.whiteboard

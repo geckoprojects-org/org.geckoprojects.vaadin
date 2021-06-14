@@ -1,0 +1,14 @@
+-buildpath: \
+	osgi.annotation; version=7.0.0,\
+	osgi.cmpn; version=7.0.0,\
+	osgi.core; version=7.0.0
+
+-baseline: *
+
+Export-Package: \
+	org.gecko.vaadin.whiteboard,\
+	org.gecko.vaadin.whiteboard.annotations
+
+Bundle-Version: ${geckoVaadinVersion}
+Bundle-Name: Vaadin Whiteboard API
+Bundle-Description: Gecko.io Vaadin Whiteboard API

@@ -1,0 +1,47 @@
+Bundle-Name: Vaadin Whiteboard Demo
+Bundle-Description: Gecko.io Vaadin Whiteboard Demo Application
+Bundle-Version: 1.0.0.SNAPSHOT
+Require-Capability: osgi.extender;filter:='(osgi.extender=osgi.configurator)'
+
+-buildpath: \
+	osgi.annotation;version='7.0.0',\
+	osgi.core;version='7.0.0',\
+	osgi.cmpn;version='7.0.0',\
+	org.apache.felix.http.servlet-api,\
+	org.gecko.vaadin.whiteboard.api;version=latest,\
+	com.vaadin.flow.server;version=latest,\
+	com.vaadin.flow.data;version=latest,\
+	com.vaadin.flow.client;version=latest,\
+	com.vaadin.flow.html.components;version=latest,\
+	com.vaadin.flow.component.button;version=latest,\
+	com.vaadin.flow.component.orderedlayout;version=latest,\
+	com.vaadin.flow.component.vaadinmaterialtheme;version=latest,\
+	com.vaadin.flow.component.notification;version=latest,\
+	com.vaadin.flow.component.vaadinlumotheme;version=latest,\
+	com.vaadin.flow.component.textfield;version=latest,\
+	com.vaadin.flow.component.applayout;version=latest,\
+	com.vaadin.flow.component.tabs;version=latest,\
+	com.vaadin.flow.component.avatar;version=latest,\
+	com.vaadin.flow.component.datepicker;version=latest,\
+	com.vaadin.flow.component.combobox;version=latest,\
+	com.vaadin.flow.component.customfield;version=latest,\
+	com.vaadin.flow.component.formlayout;version=latest,\
+	com.vaadin.flow.component.checkbox;version=latest,\
+	com.vaadin.external.gwt;version=latest
+
+-includeresource: \
+	OSGI-INF/configurator/=config/,\
+	META-INF/resources=resources,\
+	META-INF/resources=frontend,\
+	META-INF/frontend=frontend
+	 
+-privatepackage: \
+	org.gecko.vaadin.demo.service
+	
+Export-Package: \
+	org.gecko.vaadin.demo,\
+	org.gecko.vaadin.demo.views.about,\
+	org.gecko.vaadin.demo.views.helloworld,\
+	org.gecko.vaadin.demo.views.main,\
+	org.gecko.vaadin.demo.views.person,\
+	org.gecko.vaadin.demo.views.map

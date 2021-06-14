@@ -19,4 +19,5 @@ Bundle-DocURL: https://github.com/geckoprojects-org/org.geckoprojects.vaadin
 Bundle-SCM: url=https://github.com/geckoprojects-org/org.geckoprojects.vaadin, \
 	connection=scm:git:https://github.com/geckoprojects-org/org.geckoprojects.vaadin.git, \
 	developerConnection=scm:git:git@github.com:geckoprojects-org/org.geckoprojects.vaadin.git
+
 	

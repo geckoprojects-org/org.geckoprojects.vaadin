@@ -15,7 +15,7 @@
 
 ## Licenses
 
-**Apache License 2.0**
+**Eclipse Public License 2.0**
 
 ## Copyright
 

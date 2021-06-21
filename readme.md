@@ -17,14 +17,12 @@ There is a bundle fragment, for the frontend:
 
 It contains the configuration for the Vaadin frontend generator. It is contained in the **bnd.bnd** file. The generator is executed at each full build or on any modification in the **test.txt** file.
 
-we want to improve this process to run it as a bnd-exporter instead of an generator. this is also because the generation process takes a while
+we want to improve this process to run it as a bnd-exporter instead of an generator. this is also because the generation process takes a while.
 
 ## Try it out
-You simply have to build the project using the gradle wrapper:
+You simply have to build the whole project using the gradle wrapper:
 `./gradlew clean build`
 The Vaadin frontend is also generated within this step.
-
-
 
 If you want to run the application using gradle, just call:
 

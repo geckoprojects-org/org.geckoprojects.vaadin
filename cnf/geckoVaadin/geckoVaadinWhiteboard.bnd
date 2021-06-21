@@ -6,7 +6,6 @@ vaadin.plugin: \
 		releaseUrl			= "https://repo.maven.apache.org/maven2/,https://devel.data-in-motion.biz/nexus/repository/dim-release/"; \
 		snapshotUrl			= "https://devel.data-in-motion.biz/nexus/repository/dim-snapshot/";\
 		revision            =  "${vaadinBomDeps}";\
-		poll.time			= 60;\
 		transitive          = false;\
 		name=GeckoVaadin Workspace Extension
 

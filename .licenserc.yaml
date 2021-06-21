@@ -1,6 +1,6 @@
 header:
   license:
-    spdx-id: Apache-2.0
+    spdx-id: EPL-2.0
     copyright-owner: Data In Motion Consulting GmbH
 
   paths-ignore:

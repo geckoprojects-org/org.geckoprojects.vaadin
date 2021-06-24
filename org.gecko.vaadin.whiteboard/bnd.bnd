@@ -17,7 +17,7 @@
 	
 -baseline: *
 
-Bundle-Version: 1.0.0.SNAPSHOT
+Bundle-Version: ${geckoVaadinVersion}
 Bundle-Name: Vaadin Whiteboard
 Bundle-Description: Gecko.io Vaadin Whiteboard, see [developers Documentation](development.md) for further information
 Bundle-DocURL: https://gitlab.com/gecko.io/geckoVaadin

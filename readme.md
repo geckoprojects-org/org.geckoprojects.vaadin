@@ -40,6 +40,36 @@ The executable jar can be found in **org.gecko.vaadin.whiteboard.demo/generated/
 
 As a bndtools user, you can run the **launch_whiteboard_demo_osgi.bndrun** in the  **org.gecko.vaadin.whiteboard.demo** project.
 
+## Artifacts
+
+Currently the SNAPSHOT artifacts are available here: 
+
+[https://oss.sonatype.org/content/repositories/snapshots/](https://oss.sonatype.org/content/repositories/snapshots/)
+
+The generator needs this dependency:
+```
+<dependency>
+  <groupId>org.geckoprojects.vaadin</groupId>
+  <artifactId>org.gecko.vaadin.generator</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+</dependency>
+```
+
+To use the whiteboard you will need:
+
+```
+<dependency>
+  <groupId>org.geckoprojects.vaadin</groupId>
+  <artifactId>org.gecko.vaadin.whiteboard</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+</dependency>
+<dependency>
+  <groupId>org.geckoprojects.vaadin</groupId>
+  <artifactId>org.gecko.vaadin.whiteboard.push</artifactId>
+  <version>7.0.0-SNAPSHOT</version>
+</dependency>
+```
+
 ## Links
 
 * [Documentation](https://github.com/geckoprojects-org/org.geckoprojects.vaadin)

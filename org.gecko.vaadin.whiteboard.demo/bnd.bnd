@@ -1,6 +1,6 @@
 Bundle-Name: Vaadin Whiteboard Demo
 Bundle-Description: Gecko.io Vaadin Whiteboard Demo Application
-Bundle-Version: 1.0.0.SNAPSHOT
+Bundle-Version: ${geckoVaadinVersion}
 Require-Capability: osgi.extender;filter:='(osgi.extender=osgi.configurator)'
 
 -buildpath: \

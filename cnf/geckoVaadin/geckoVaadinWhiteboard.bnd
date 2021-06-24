@@ -14,6 +14,9 @@ vaadin.plugin: \
 #We have to set a default to prevent a warning the the instruction is unknowon
 -enable-gecko-emf: false
 
+-groupid: org.geckoprojects.vaadin
+
+
 geckoVaadinVersion: 0.0.1-SNAPSHOT
 vaadinVersion: 20.0.0
 flowVersion: 7.0.0

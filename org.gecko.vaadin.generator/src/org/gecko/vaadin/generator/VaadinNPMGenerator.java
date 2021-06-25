@@ -264,16 +264,15 @@ public class VaadinNPMGenerator implements Generator<GeneratorOptions>, PluginAd
 		Collection<Container> buildpath;
 		try {
 //			buildpath = context.getProject().getBuildpath();
-			String bsn = context.getProject().getBundleName();
-			Set<String> ignoreSet = new HashSet<String>();
-			ignoreSet.add(bsn);
-			ignoreSet.add("org.gecko.vaadin.whiteboard");
-			ignoreSet.add("org.gecko.vaadin.whiteboard.api");
-			ignoreSet.add("org.gecko.vaadin.whiteboard.push");
+			String bsn = context.getProject().getName();
+			Set<String> filterSet = new HashSet<String>();
+			filterSet.add(bsn + ".jar");
+			filterSet.add("org.gecko.vaadin.whiteboard.push.jar");
+			filterSet.add("org.gecko.vaadin.whiteboard.api.jar");
+			filterSet.add("org.gecko.vaadin.whiteboard.jar");
 			buildpath = context.getProject().getRunbundles();
-			
 			return buildpath.stream()
-					.filter(c->!ignoreSet.contains(c.getBundleSymbolicName()))
+					.filter(c->!filterSet.contains(c.getBundleSymbolicName()))
 					.map(Container::getFile)
 					.collect(Collectors.toSet());
 		} catch (Exception e) {

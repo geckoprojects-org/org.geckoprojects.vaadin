@@ -31,9 +31,11 @@ Bundle-Version: ${geckoVaadinVersion}
 -includeresource: \
 	META-INF/VAADIN=META-INF/VAADIN
 	
--dependson: org.gecko.vaadin.generator
-
--pluginpath:${workspace}/org.gecko.vaadin.generator/generated/org.gecko.vaadin.generator.jar
+-dependson: \
+	org.gecko.vaadin.generator,\
+	org.gecko.vaadin.whiteboard,\
+	org.gecko.vaadin.whiteboard.push,\
+	org.gecko.vaadin.demo
 
 -generate:\
 	test.txt;\

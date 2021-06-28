@@ -70,15 +70,6 @@ public class VaadinWhiteboardConfigurator {
 	private Configuration contextConfig;
 	private Configuration initConfig;
 	private Configuration pushConfig;
-//	private static Map<String, FrontendConfig> frontendConfigurations = new ConcurrentHashMap<String, FrontendConfig>();
-	
-//	private static class FrontendConfig {
-//		String target;
-//		Configuration frontendConfig;
-//		Configuration clientConfig;
-//		Configuration dataConfig;
-//		AtomicInteger usageCount;
-//	}
 	
 	@ObjectClassDefinition
 	public @interface VaadinApplicationConfig {
@@ -91,10 +82,8 @@ public class VaadinWhiteboardConfigurator {
 
 	@Activate
 	public void activate(VaadinApplicationConfig config, BundleContext context) throws ConfigurationException {
-		String currentTarget = httpWhiteboardTarget;
 		configure(config);
 		updateReferenceCollector();
-//		updateFrontend(config, currentTarget);
 		// create servlet context for context path
 		updateContext();
 		// register Flow Push resource under this whiteboard/servlet context
@@ -109,11 +98,9 @@ public class VaadinWhiteboardConfigurator {
 	@Modified
 	public void modified(VaadinApplicationConfig config, BundleContext context) throws ConfigurationException {
 		long oldCount = changeCount.get();
-		String currentTarget = httpWhiteboardTarget;
 		configure(config);
 		if (oldCount < changeCount.get()) {
 			updateReferenceCollector();
-//			updateFrontend(config, currentTarget);
 			updateContext();
 			updatePush();
 			updateInitialization();
@@ -153,7 +140,6 @@ public class VaadinWhiteboardConfigurator {
 				logger.log(Level.SEVERE, "Cannot remove whiteboard configuration for application: " + applicationName, e);
 			}
 		}
-//		removeFrontend(config.vaadin_whiteboard_target());
 		if (refCollectorConfig != null) {
 			try {
 				refCollectorConfig.delete();
@@ -162,37 +148,6 @@ public class VaadinWhiteboardConfigurator {
 			}
 		}
 	}
-
-//	/**
-//	 * Removes the frontend, if it is not used by any other whiteboard
-//	 * @param target
-//	 */
-//	private void removeFrontend(String target) {
-//		if (target != null) {
-//			FrontendConfig fc = frontendConfigurations.get(target);
-//			if (fc != null) {
-//				int u = fc.usageCount.decrementAndGet();
-//				if (u == 0) {
-//					frontendConfigurations.remove(target);
-//					try {
-//						fc.frontendConfig.delete();
-//					} catch (IOException e) {
-//						logger.log(Level.SEVERE, "Cannot remove frontend configuration for http target: " + target, e);
-//					}
-//					try {
-//						fc.clientConfig.delete();
-//					} catch (IOException e) {
-//						logger.log(Level.SEVERE, "Cannot remove frontend client configuration for http target: " + target, e);
-//					}
-//					try {
-//						fc.dataConfig.delete();
-//					} catch (IOException e) {
-//						logger.log(Level.SEVERE, "Cannot remove frontend data configuration for http target: " + target, e);
-//					}
-//				}
-//			}
-//		}
-//	}
 
 	private void updateReferenceCollector() {
 		if (refCollectorConfig == null) {
@@ -252,9 +207,6 @@ public class VaadinWhiteboardConfigurator {
 		properties.put(HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME, applicationName);
 		
 		properties.put(HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH, contextPath);
-//		if (httpWhiteboardTarget != null) {
-//			properties.put(HttpWhiteboardConstants.HTTP_WHITEBOARD_TARGET, String.format("(%s=%s)", null));
-//		}
 		try {
 			contextConfig.updateIfDifferent(properties);
 		} catch (IOException e) {

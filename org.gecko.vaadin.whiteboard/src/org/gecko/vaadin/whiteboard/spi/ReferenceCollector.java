@@ -38,9 +38,12 @@ import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
- * {@link PushStream} based service tracker customizer
- * @author Juergen Albert
- * @since 03.01.2018
+ * {@link PushStream} based service tracker customizer. Each Vaadin Whiteboard gets an own
+ * instance of this service, collecting all Vaadin {@link com.vaadin.flow.component.Component} that belong 
+ * to the whiteboard.
+ * 
+ * @author Mark Hoffmann
+ * @since 03.01.2021
  */
 @Component(immediate = true, name = Constants.CM_REFERENCE_COLLECTOR, configurationPolicy = ConfigurationPolicy.REQUIRE, service = ReferenceCollector.class)
 public class ReferenceCollector implements ServiceTrackerCustomizer<Object, Object> {
@@ -82,8 +85,8 @@ public class ReferenceCollector implements ServiceTrackerCustomizer<Object, Obje
 	}
 
 	/**
-	 * Connects the {@link PushStream} with the JaxRs dispatcher to forward
-	 * the services it
+	 * Connects the {@link PushStream} with the Vaadin Whiteboard dispatcher to forward
+	 * the {@link com.vaadin.flow.component.Component} services to it
 	 * @param dispatcher the dispatcher instance
 	 * @throws  
 	 */
@@ -99,7 +102,7 @@ public class ReferenceCollector implements ServiceTrackerCustomizer<Object, Obje
 				if(sre.isComponent()) {
 					handleComponentReferences(dispatcher, sre);
 				} else {
-					logger.warning("Cannot handle unknown Vaadin type. Currentyl only vaadin.component is supported");
+					logger.warning("Cannot handle unknown Vaadin type. Currently only vaadin.component is supported");
 				}
 			});
 

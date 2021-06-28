@@ -1,19 +1,21 @@
 package org.gecko.vaadin.generator;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import com.vaadin.flow.plugin.base.BuildFrontendUtil;
@@ -26,6 +28,7 @@ import com.vaadin.flow.server.frontend.installer.NodeInstaller;
 import com.vaadin.flow.server.frontend.scanner.ClassFinder;
 
 import aQute.bnd.build.Container;
+import aQute.bnd.build.Project;
 import aQute.bnd.header.Attrs;
 import aQute.bnd.header.OSGiHeader;
 import aQute.bnd.header.Parameters;
@@ -37,21 +40,57 @@ import aQute.bnd.service.generate.Generator;
 @ExternalPlugin(name = "geckoVaadinNPM", objectClass = Generator.class)
 public class VaadinNPMGenerator implements Generator<GeneratorOptions>, PluginAdapterBase, PluginAdapterBuild {
 
+	private static final String[] CLEANUP_RESOURCES = new String[] {"types.d.ts", "webpack.config.js", "webpack.generated.js", "tsconfig.json", "pnpm-lock.yaml", "pnpmfile.js", "package.json", ".npmrc", "generated/index.html", "generated/index.ts", "generated/sw.ts", "generated/plugins/", "generated/flow-frontend/", "generated/frontend/", "node_modules/", "frontend/"};
 	public static final String INCLUDE_FROM_COMPILE_DEPS_REGEX = ".*(/|\\\\)(portlet-api|javax\\.servlet-api)-.+jar$";
 
 	private GeneratorLogger logger;
-	private BuildContext context;
+	private Project project;
+	private File basePath;
 
 
 	@Override
 	public Optional<String> generate(BuildContext context, GeneratorOptions options) throws Exception {
-		this.context = context;
-		logger = GeneratorLogger.getLogger(context);
+		project = context.getProject();
+		basePath = context.getBase();
+		logger = getLogger();
+		logger.info("Generating frontend ...");
+		updateHeader(context, Constants.REQUIRE_CAPABILITY, new TreeSet<>());
+		updateHeader(context, Constants.PROVIDE_CAPABILITY, new TreeSet<>());
+		
+		doGenerate(project);
+		
+		boolean cleanup = "ALL".equals(context.getProperty("cleanup", "NONE"));
+		if (cleanup) {
+			logger.info("Doing cleanup ...");
+			for(String r : CLEANUP_RESOURCES) {
+				File fr = project.getFile(r);
+				if (fr.isDirectory() && fr.exists()) {
+					Files.walk(fr.toPath())
+				      .sorted(Comparator.reverseOrder())
+				      .map(Path::toFile)
+				      .forEach(File::delete);
+					if ( fr.exists()) {
+						fr.delete();
+					}
+					logger.info("Removed folder " + r);
+					continue;
+				}
+				if (fr.exists()) {
+					fr.delete();
+					logger.info("Removed file " + r);
+				}
+			}
+		}
+		logger.info("Finished cleanup");
+		logger.close();
+		return Optional.empty();
+	}
+	
+	protected void doGenerate(Project project) throws Exception {
+		this.project = project;
+		basePath = project.getBase();
+		logger = getLogger();
 		try {
-
-			logger.info("Generating frontend ...");
-			updateHeader(context, Constants.REQUIRE_CAPABILITY, new TreeSet<>());
-			updateHeader(context, Constants.PROVIDE_CAPABILITY, new TreeSet<>());
 
 			logger.info(" - Propagate build info ...");
 			BuildFrontendUtil.propagateBuildInfo(this);
@@ -74,10 +113,11 @@ public class VaadinNPMGenerator implements Generator<GeneratorOptions>, PluginAd
 			e.printStackTrace();
 		} finally {
 			logger.info("Finished generating frontend");
-			logger.close();
 		}
-
-		return Optional.empty();
+	}
+	
+	private GeneratorLogger getLogger() throws IOException {
+		return logger != null ? logger : GeneratorLogger.getLogger(basePath, project.getLogger());
 	}
 
 	/**
@@ -264,13 +304,13 @@ public class VaadinNPMGenerator implements Generator<GeneratorOptions>, PluginAd
 		Collection<Container> buildpath;
 		try {
 //			buildpath = context.getProject().getBuildpath();
-			String bsn = context.getProject().getName();
+			String bsn = project.getName();
 			Set<String> filterSet = new HashSet<String>();
 			filterSet.add(bsn + ".jar");
 			filterSet.add("org.gecko.vaadin.whiteboard.push.jar");
 			filterSet.add("org.gecko.vaadin.whiteboard.api.jar");
 			filterSet.add("org.gecko.vaadin.whiteboard.jar");
-			buildpath = context.getProject().getRunbundles();
+			buildpath = project.getRunbundles();
 			return buildpath.stream()
 					.filter(c->!filterSet.contains(c.getBundleSymbolicName()))
 					.map(Container::getFile)
@@ -451,7 +491,7 @@ public class VaadinNPMGenerator implements Generator<GeneratorOptions>, PluginAd
      */
 	@Override
 	public Path projectBaseDirectory() {
-		return context.getBase().toPath();
+		return basePath == null ? null : basePath.toPath();
 	}
 
     /**

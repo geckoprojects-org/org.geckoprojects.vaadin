@@ -40,7 +40,8 @@ Bundle-Version: ${geckoVaadinVersion}
 -generate:\
 	test.txt;\
 	generate=geckoVaadinNPM;\
-	output=META-INF/VAADIN
+	output=META-INF/VAADIN;\
+	cleanup=ALL
 
 -privatepackage: org.gecko.vaadin.whiteboard.demo.frontend
 -runfw: org.apache.felix.framework;version='[7.0.0,7.0.0]'

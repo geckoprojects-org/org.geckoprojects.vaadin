@@ -25,6 +25,11 @@ import org.osgi.framework.ServiceReference;
 import com.vaadin.flow.di.Lookup;
 import com.vaadin.flow.di.ResourceProvider;
 
+/**
+ * {@link Lookup} implementation that looks into the service registry, to get services
+ * @author Mark Hoffmann
+ *
+ */
 public class WhiteboardLookup implements Lookup {
 	
 	private static final Logger logger = Logger.getLogger(WhiteboardLookup.class.getName());

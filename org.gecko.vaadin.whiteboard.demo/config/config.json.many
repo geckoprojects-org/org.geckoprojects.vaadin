@@ -1,0 +1,29 @@
+{
+  ":configurator:resource-version": 1,
+  
+  "org.apache.felix.http~vaadinHttp":
+	{
+		"org.osgi.service.http.port": "8085",
+		"org.osgi.service.http.host": "0.0.0.0",
+		"org.apache.felix.http.context_path": "vaadin/",
+		"org.apache.felix.http.name": "vaadinHttp",
+		"org.apache.felix.http.runtime.init.id": "vaadinHttp"
+	},
+  "VaadinApplication~VaadinApp": 
+	{
+		"vaadin.application.description": "OSGi Vaadin Application",
+		"vaadin.application.name": "VaadinApp",
+		"vaadin.application.theme": "Material",
+		"vaadin.application.context": "/test",
+		"vaadin.application.frontend": "NPM",
+		"vaadin.whiteboard.target" : "(id=vaadinHttp)"
+	},
+	"VaadinApplication~Vaadin2": 
+	{
+		"vaadin.application.description": "OSGi Second Application",
+		"vaadin.application.name": "Vaadin2",
+		"vaadin.application.theme": "Material",
+		"vaadin.application.context": "/mytoast",
+		"vaadin.application.frontend": "NPM"
+	}
+}

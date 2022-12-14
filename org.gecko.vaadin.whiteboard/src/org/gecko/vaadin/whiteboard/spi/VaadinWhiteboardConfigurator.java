@@ -91,7 +91,7 @@ public class VaadinWhiteboardConfigurator {
 
 	@Activate
 	public void activate(VaadinApplicationConfig config, BundleContext context) throws ConfigurationException {
-		String currentTarget = httpWhiteboardTarget;
+//		String currentTarget = httpWhiteboardTarget;
 		configure(config);
 		updateReferenceCollector();
 //		updateFrontend(config, currentTarget);
@@ -109,7 +109,7 @@ public class VaadinWhiteboardConfigurator {
 	@Modified
 	public void modified(VaadinApplicationConfig config, BundleContext context) throws ConfigurationException {
 		long oldCount = changeCount.get();
-		String currentTarget = httpWhiteboardTarget;
+//		String currentTarget = httpWhiteboardTarget;
 		configure(config);
 		if (oldCount < changeCount.get()) {
 			updateReferenceCollector();

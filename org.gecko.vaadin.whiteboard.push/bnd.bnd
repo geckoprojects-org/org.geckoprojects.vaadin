@@ -5,9 +5,6 @@
 	com.vaadin.flow.push;version='7.0',\
 	org.gecko.vaadin.whiteboard.api;version=latest
 
-javac.source: 11
-javac.target: 11
-
 Bundle-Version: 7.0.0.SNAPSHOT
 Private-Package: org.gecko.vaadin.whiteboard.push
 

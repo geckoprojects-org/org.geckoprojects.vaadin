@@ -3,7 +3,6 @@
 	osgi.core;version='7.0.0',\
 	osgi.cmpn;version='7.0.0',\
 	org.gecko.vaadin.whiteboard.api;version=project,\
-	org.gecko.vaadin.whiteboard.demo;version=project,\
 	com.vaadin.flow.component.button;version=latest,\
 	com.vaadin.flow.component.orderedlayout;version=latest,\
 	com.vaadin.flow.server;version=latest,\
@@ -20,13 +19,17 @@
 	com.vaadin.flow.polymer-template;version=latest,\
 	com.vaadin.flow.lit-template;version=latest,\
 	com.vaadin.flow.dnd;version=latest,\
-	javax.servlet-api;version='3.1'
+	javax.servlet-api;version='3.1',\
+	org.gecko.vaadin.whiteboard.demo;version=latest
 
 javac.source: 11
 javac.target: 11
 
 Fragment-Host: org.gecko.vaadin.whiteboard.demo
 Bundle-Version: ${geckoVaadinVersion}
+
+-pluginpath:${workspace}/org.gecko.vaadin.generator/generated/org.gecko.vaadin.generator.jar
+
 
 -includeresource: \
 	META-INF/VAADIN=META-INF/VAADIN
@@ -35,21 +38,22 @@ Bundle-Version: ${geckoVaadinVersion}
 	org.gecko.vaadin.generator,\
 	org.gecko.vaadin.whiteboard,\
 	org.gecko.vaadin.whiteboard.push,\
-	org.gecko.vaadin.demo
+	org.gecko.vaadin.whiteboard.demo
 
 -generate:\
 	test.txt;\
 	generate=geckoVaadinNPM;\
 	output=META-INF/VAADIN
 
--privatepackage: org.gecko.vaadin.whiteboard.demo.frontend
--runfw: org.apache.felix.framework;version='[7.0.0,7.0.0]'
+
+-runfw: org.apache.felix.framework;version='[7.0.1,7.0.2]'
 -runee: JavaSE-11
 -runrequires: \
 	bnd.identity;id='org.gecko.vaadin.whiteboard.api',\
 	bnd.identity;id='org.gecko.vaadin.whiteboard',\
 	bnd.identity;id='org.gecko.vaadin.whiteboard.demo.frontend',\
-	bnd.identity;id='org.gecko.vaadin.whiteboard.push'
+	bnd.identity;id='org.gecko.vaadin.whiteboard.push',\
+	bnd.identity;id='org.reflections'
 -runbundles: \
 	com.fasterxml.jackson.core.jackson-annotations;version='[2.12.0,2.12.1)',\
 	com.fasterxml.jackson.core.jackson-core;version='[2.12.0,2.12.1)',\
@@ -58,7 +62,7 @@ Bundle-Version: ${geckoVaadinVersion}
 	com.helger.ph-css;version='[6.2.3,6.2.4)',\
 	com.vaadin.external.gentyref;version='[1.2.0,1.2.1)',\
 	com.vaadin.external.gwt;version='[2.8.2,2.8.3)',\
-	com.vaadin.flow.client;version='[7.0.0,7.0.1)',\
+	com.vaadin.flow.client;version='[7.0.6,7.0.7)',\
 	com.vaadin.flow.component.applayout;version='[20.0.0,20.0.1)',\
 	com.vaadin.flow.component.avatar;version='[20.0.0,20.0.1)',\
 	com.vaadin.flow.component.button;version='[20.0.0,20.0.1)',\
@@ -68,11 +72,12 @@ Bundle-Version: ${geckoVaadinVersion}
 	com.vaadin.flow.component.textfield;version='[20.0.0,20.0.1)',\
 	com.vaadin.flow.component.vaadinlumotheme;version='[20.0.0,20.0.1)',\
 	com.vaadin.flow.component.vaadinmaterialtheme;version='[20.0.0,20.0.1)',\
-	com.vaadin.flow.data;version='[7.0.0,7.0.1)',\
-	com.vaadin.flow.html.components;version='[7.0.0,7.0.1)',\
-	com.vaadin.flow.push;version='[7.0.0,7.0.1)',\
-	com.vaadin.flow.server;version='[7.0.0,7.0.1)',\
+	com.vaadin.flow.data;version='[7.0.6,7.0.7)',\
+	com.vaadin.flow.html.components;version='[7.0.6,7.0.7)',\
+	com.vaadin.flow.push;version='[7.0.6,7.0.7)',\
+	com.vaadin.flow.server;version='[7.0.6,7.0.7)',\
 	jakarta.annotation-api;version='[1.3.5,1.3.6)',\
+	javassist;version='[3.27.0,3.27.1)',\
 	net.bytebuddy.byte-buddy;version='[1.10.19,1.10.20)',\
 	org.apache.aries.spifly.dynamic.bundle;version='[1.3.2,1.3.3)',\
 	org.apache.commons.commons-compress;version='[1.20.0,1.20.1)',\
@@ -83,21 +88,25 @@ Bundle-Version: ${geckoVaadinVersion}
 	org.apache.felix.configurator;version='[1.0.8,1.0.9)',\
 	org.apache.felix.http.bridge;version='[4.1.2,4.1.3)',\
 	org.apache.felix.http.servlet-api;version='[1.1.2,1.1.3)',\
-	org.apache.felix.scr;version='[2.1.24,2.1.25)',\
+	org.apache.felix.scr;version='[2.2.0,2.2.1)',\
 	org.gecko.vaadin.whiteboard;version=snapshot,\
 	org.gecko.vaadin.whiteboard.api;version=snapshot,\
 	org.gecko.vaadin.whiteboard.demo;version=snapshot,\
 	org.gecko.vaadin.whiteboard.demo.frontend;version=snapshot,\
 	org.gecko.vaadin.whiteboard.push;version=snapshot,\
 	org.jsoup;version='[1.12.1,1.12.2)',\
-	org.objectweb.asm;version='[9.0.0,9.0.1)',\
-	org.objectweb.asm.commons;version='[9.0.0,9.0.1)',\
-	org.objectweb.asm.tree;version='[9.0.0,9.0.1)',\
-	org.objectweb.asm.tree.analysis;version='[9.0.0,9.0.1)',\
-	org.objectweb.asm.util;version='[9.0.0,9.0.1)',\
-	org.osgi.service.component;version='[1.4.0,1.4.1)',\
+	org.objectweb.asm;version='[9.3.0,9.3.1)',\
+	org.objectweb.asm.commons;version='[9.3.0,9.3.1)',\
+	org.objectweb.asm.tree;version='[9.3.0,9.3.1)',\
+	org.objectweb.asm.tree.analysis;version='[9.3.0,9.3.1)',\
+	org.objectweb.asm.util;version='[9.3.0,9.3.1)',\
+	org.osgi.service.cm;version='[1.6.0,1.6.1)',\
+	org.osgi.service.component;version='[1.5.0,1.5.1)',\
+	org.osgi.service.http.whiteboard;version='[1.1.0,1.1.1)',\
 	org.osgi.util.function;version='[1.1.0,1.1.1)',\
-	org.osgi.util.promise;version='[1.1.1,1.1.2)',\
+	org.osgi.util.promise;version='[1.2.0,1.2.1)',\
 	org.osgi.util.pushstream;version='[1.0.1,1.0.2)',\
-	slf4j.api;version='[1.7.25,1.7.26)',\
-	slf4j.jcl;version='[1.7.25,1.7.26)'
+	org.reflections;version='[0.9.12,0.9.13)',\
+	slf4j.api;version='[1.7.25,1.7.26)'
+	
+-privatepackage: org.gecko.vaadin.whiteboard.demo.frontend

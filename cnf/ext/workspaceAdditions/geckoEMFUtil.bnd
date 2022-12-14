@@ -1,0 +1,78 @@
+# Copyright 2021 Data In Motion Consulting GmbH
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+# 
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# SPDX-License-Identifier: Apache-2.0
+
+-plugin.geckoEMFUtil: \
+	aQute.bnd.repository.maven.pom.provider.BndPomRepository;\
+		releaseUrl			= "https://repo.maven.apache.org/maven2/,https://devel.data-in-motion.biz/nexus/repository/dim-release/"; \
+		snapshotUrl			= "https://devel.data-in-motion.biz/nexus/repository/dim-snapshot/";\
+		revision            = "${geckoEMFUtilBomDeps}" ;\
+		transitive          = false;\
+		poll_time			= -1;\
+		name=GeckoEMFUtil Workspace Extension
+
+-buildpath.emfutil: ${if;${-enable-gecko-emf-util};${gecko.emf.util.lib}}
+
+# We need to set a default so we don't get warnings
+-enable-gecko-emf-util: false
+
+util.gecko.emf.version: 4.0.1
+gecko.rest.version: 4.0.10
+
+geckoEMFUtilBomDeps: \
+	com.sun.activation:javax.activation:1.2.0,\
+	com.sun.xml.bind:jaxb-impl:2.3.3,\
+	de.undercouch:bson4jackson:2.11.0,\
+	jakarta.activation:jakarta.activation-api:1.2.1,\
+	jakarta.annotation:jakarta.annotation-api:1.3.5,\
+	jakarta.validation:jakarta.validation-api:2.0.2,\
+	jakarta.ws.rs:jakarta.ws.rs-api:2.1.6,\
+	jakarta.xml.bind:jakarta.xml.bind-api:2.3.3,\
+	org.javassist:javassist:3.27.0-GA,\
+	org.apache.felix:org.apache.felix.configadmin:1.9.18,\
+	org.apache.felix:org.apache.felix.http.jetty:4.1.2,\
+	org.apache.felix:org.apache.felix.http.servlet-api:1.1.2,\
+	org.apache.felix:org.apache.felix.scr:2.1.24,\
+	org.eclipse.emf:org.eclipse.emf.common:2.20.0,\
+	org.eclipse.emf:org.eclipse.emf.ecore:2.23.0,\
+	org.eclipse.emf:org.eclipse.emf.ecore.xmi:2.16.0,\
+	org.emfjson:emfjson-jackson:1.3.0,\
+	org.osgi:org.osgi.util.function:1.1.0,\
+	org.osgi:org.osgi.util.promise:1.2.0,\
+	org.osgi:org.osgi.util.pushstream:1.0.0,\
+	org.yaml:snakeyaml:1.27,\
+	org.geckoprojects.emf:org.gecko.emf.util.annotations:1.0.0,\
+	com.fasterxml.jackson.core:jackson-annotations:2.11.2,\
+	com.fasterxml.jackson.core:jackson-core:2.11.2,\
+	com.fasterxml.jackson.core:jackson-databind:2.11.2,\
+	com.fasterxml.jackson.dataformat:jackson-dataformat-properties:2.11.2,\
+	com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.11.2,\
+	org.geckoprojects.emf:org.gecko.emf.collections:2.0.16,\
+	org.geckoprojects.emf:org.gecko.emf.osgi.bson:1.1.2,\
+	org.geckoprojects.emf:org.gecko.emf.osgi.ecore:3.3.8,\
+	org.geckoprojects.emf:org.gecko.emf.osgi.json:1.3.2,\
+	org.geckoprojects.emf:org.gecko.emf.osgi.rest:1.3.0,\
+	org.geckoprojects.emf:org.gecko.emf.pushstreams:1.0.15,\
+	org.geckoprojects.emf:org.gecko.emf.utilities.model:2.0.1,\
+	org.geckoprojects.emf:org.gecko.emf.utilities.query.model:1.0.11,\
+	org.geckoprojects.emf:org.gecko.emf.osgi.api:${util.gecko.emf.version},\
+	org.geckoprojects.emf:org.gecko.emf.osgi.component:${util.gecko.emf.version},\
+	org.geckoprojects.emf:org.gecko.emf.osgi.ecore:${util.gecko.emf.version}
+
+gecko.emf.util.lib: \
+	osgi.cmpn;version=7.0.0,\
+	org.gecko.emf.util.annotations,\
+	org.emfjson.jackson
+		

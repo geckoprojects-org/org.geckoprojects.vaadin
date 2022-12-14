@@ -19,5 +19,20 @@ Bundle-DocURL: https://github.com/geckoprojects-org/org.geckoprojects.vaadin
 Bundle-SCM: url=https://github.com/geckoprojects-org/org.geckoprojects.vaadin, \
 	connection=scm:git:https://github.com/geckoprojects-org/org.geckoprojects.vaadin.git, \
 	developerConnection=scm:git:git@github.com:geckoprojects-org/org.geckoprojects.vaadin.git
+	
+-plugin.org.geckoprojects.vaadin: \
+	aQute.bnd.repository.maven.pom.provider.BndPomRepository;\
+		releaseUrl			= "https://repo.maven.apache.org/maven2/";\
+		snapshotUrl			= "https://oss.sonatype.org/content/repositories/snapshots/";\
+		revision            = "${dependencies.project}";\
+		transitive          = false;\
+		name                = "Project Dependencies"
+
+
+##  All Project Deps
+dependencies.project:\
+	biz.aQute:biz.aQute.gogo.commands.provider:1.7.0,\
+	org.apache.johnzon:johnzon-core:1.2.19
+
 
 	

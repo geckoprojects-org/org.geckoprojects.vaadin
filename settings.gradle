@@ -1,0 +1,21 @@
+pluginManagement {
+  plugins {
+    id 'biz.aQute.bnd.workspace' version bnd_version
+  }
+  repositories {
+    maven {
+      url = uri(bnd_snapshots)
+      content {
+        snapshotsOnly()
+        includeGroup('biz.aQute.bnd')
+        includeGroup('biz.aQute.bnd.workspace')
+      }
+    }
+    mavenCentral()
+    gradlePluginPortal()
+    rootProject.name="org.gecko.vaadin"
+  }
+}
+plugins {
+  id 'biz.aQute.bnd.workspace'
+}

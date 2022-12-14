@@ -1,0 +1,58 @@
+header:
+  license:
+    spdx-id: EPL-2.0
+    copyright-owner: Data In Motion Consulting GmbH
+    content: |
+      This program and the accompanying materials are made available under the terms of the
+      Eclipse Public License v2.0 which accompanies this distribution, and is available at
+      http://www.eclipse.org/legal/epl-v20.html
+
+    pattern: |
+      This program and the accompanying materials are made available under the terms of the
+      Eclipse Public License v2.0 which accompanies this distribution, and is available at
+      http://www.eclipse.org/legal/epl-v20.html
+
+  paths-ignore:
+    - 'dist'
+    - 'licenses'
+    - '**/package-info.java'
+    - '**/packageinfo'
+    - '**/module-info.java'
+    - '**/*.bnd'
+    - '**/*.bndrun'
+    - '**/*.xml'
+    - '**/*.ecore'
+    - '**/*.genmodel'
+    - '**/*.md'
+    - '**/*.MD'
+    - '**/.keep'
+    - '**/*.jetproperties'
+    - '**/*.javajet'
+    - '**/*.javajetinc'
+    - '**/*.properties'
+    - '**/*.maven'
+    - '**/*.mvn'
+    - '**/*.html'
+    - '**/*.ftl'
+    - '**/*.aird'
+    - '**/*.basic'
+    - '**/.classpath'
+    - 'org.gecko.emf.osgi.codegen/src/org/gecko/emf/osgi/codegen/templates/model/*'
+    - 'LICENSE'
+    - 'Jenkinsfile'
+    - 'NOTICE'
+    - '.gitattributes'
+    - '.github/**'
+    - '.gitignore'
+    - 'cnf/release/**.*'
+    - '.gradle-wrapper/gradle-wrapper.properties'
+    - '.licenserc.yaml'
+    - '**/.project'
+    - '**/*.prefs'
+    - 'build.gradle'
+    - 'gradle.properties'
+    - 'gradlew'
+    - 'gradlew.bat'
+    - 'settings.gradle'
+ 
+  comment: always

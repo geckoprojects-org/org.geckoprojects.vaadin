@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   id="Ebene_1"
+   data-name="Ebene 1"
+   viewBox="0 0 325.41 87.87"
+   version="1.1"
+   sodipodi:docname="CI_DIM.svg"
+   width="325.41"
+   height="87.870003"
+   inkscape:version="1.1 (ce6663b3b7, 2021-05-25)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview37"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     width="324.41px"
+     inkscape:zoom="4.4164737"
+     inkscape:cx="182.1589"
+     inkscape:cy="43.926447"
+     inkscape:window-width="2508"
+     inkscape:window-height="1403"
+     inkscape:window-x="52"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="Ebene_1" />
+  <defs
+     id="defs4">
+    <style
+       id="style2">.cls-1{font-size:28px;}.cls-1,.cls-6,.cls-7{fill:#084785;}.cls-1,.cls-6{font-family:D-DINExp, D-DIN Exp;}.cls-2{letter-spacing:-0.07em;}.cls-3{letter-spacing:0em;}.cls-4{letter-spacing:-0.01em;}.cls-5{letter-spacing:0em;}.cls-6{font-size:29px;}.cls-8{fill:none;stroke:#084785;stroke-miterlimit:10;stroke-width:1.5px;}.cls-9{fill:#4dbbc5;}</style>
+  </defs>
+  <text
+     class="cls-1"
+     transform="translate(102.81,54.86)"
+     id="text18">D<tspan
+   class="cls-2"
+   x="18.870001"
+   y="0"
+   id="tspan6">AT</tspan><tspan
+   x="49"
+   y="0"
+   id="tspan8">A</tspan><tspan
+   class="cls-3"
+   x="67.650002"
+   y="0"
+   id="tspan10" /><tspan
+   x="73.580002"
+   y="0"
+   id="tspan12">IN</tspan><tspan
+   class="cls-4"
+   x="100.74"
+   y="0"
+   id="tspan14" /><tspan
+   class="cls-5"
+   x="106.65"
+   y="0"
+   id="tspan16">MOTI</tspan></text>
+  <text
+     class="cls-6"
+     id="text20"
+     x="280.35001"
+     y="54.860001">ON</text>
+  <path
+     class="cls-7"
+     d="M 33.16,18.8 A 3.17,3.17 0 1 1 30,15.63 3.16,3.16 0 0 1 33.17,18.8"
+     transform="translate(-11.7,-9.89)"
+     id="path22" />
+  <path
+     class="cls-8"
+     d="m 97,56.53 a 0.54,0.54 0 0 1 -0.13,0.4 c -0.1,0.12 -10,11.84 -30.38,23.95 C 45.76,93.15 31.24,95.92 31.1,96 a 0.57,0.57 0 0 1 -0.63,-0.36 c 0,-0.14 -5.31,-14.58 -5.65,-38.3 -0.34,-24 4.5,-38.3 4.55,-38.44 A 0.55,0.55 0 0 1 30,18.53 c 0.14,0 15.2,2.79 35.88,14.44 21,11.81 30.85,23.18 30.94,23.29 A 0.55,0.55 0 0 1 97,56.53 Z"
+     transform="translate(-11.7,-9.89)"
+     id="path24" />
+  <path
+     class="cls-9"
+     d="m 90.51,70.92 a 2.88,2.88 0 0 1 -1.62,2.85 c -0.54,0.27 -13.59,6.48 -36.32,9 -23,2.53 -36.61,-0.76 -37.18,-0.9 a 2.88,2.88 0 0 1 -2.18,-3 c 0,-0.6 1.17,-15 10.32,-36 9.28,-21.23 19,-31.61 19.42,-32 a 2.89,2.89 0 0 1 3.74,-0.39 c 0.5,0.34 12.33,8.59 25.82,27.05 13.67,18.71 17.73,32.34 17.9,32.91 a 2.87,2.87 0 0 1 0.1,0.56"
+     transform="translate(-11.7,-9.89)"
+     id="path26" />
+  <path
+     class="cls-7"
+     d="m 72.17,57 c 0,12.51 -2.08,19.85 -2.18,20.22 a 5.34,5.34 0 0 1 -5.74,3.84 c -0.47,0 -11.6,-1.37 -27.27,-9 C 21.08,64.31 13.51,56.51 13.19,56.18 a 5.33,5.33 0 0 1 -0.44,-6.87 c 0.27,-0.37 7,-9.38 21.41,-19.17 14.62,-9.92 25.32,-12.71 25.76,-12.82 a 5.35,5.35 0 0 1 6.24,3.07 c 0.18,0.43 4.53,10.73 5.73,28.11 0.2,3 0.29,5.89 0.28,8.5"
+     transform="translate(-11.7,-9.89)"
+     id="path28" />
+  <path
+     class="cls-7"
+     d="m 99.8,55.74 a 3.17,3.17 0 1 1 -3.17,-3.17 3.17,3.17 0 0 1 3.17,3.17"
+     transform="translate(-11.7,-9.89)"
+     id="path30" />
+  <path
+     class="cls-7"
+     d="m 34.67,94.59 a 3.17,3.17 0 1 1 -3.17,-3.17 3.17,3.17 0 0 1 3.17,3.17"
+     transform="translate(-11.7,-9.89)"
+     id="path32" />
+  <path
+     class="cls-7"
+     d="m 32.88,18.77 a 3.17,3.17 0 1 1 -3.17,-3.17 3.17,3.17 0 0 1 3.17,3.17"
+     transform="translate(-11.7,-9.89)"
+     id="path34" />
+</svg>

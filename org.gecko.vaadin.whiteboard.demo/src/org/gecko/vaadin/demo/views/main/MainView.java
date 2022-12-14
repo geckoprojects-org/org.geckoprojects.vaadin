@@ -1,3 +1,14 @@
+/**
+ * Copyright (c) 2012 - 2022 Data In Motion and others.
+ * All rights reserved. 
+ * 
+ * This program and the accompanying materials are made available under the terms of the 
+ * Eclipse Public License v2.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v20.html
+ * 
+ * Contributors:
+ *     Data In Motion - initial API and implementation
+ */
 package org.gecko.vaadin.demo.views.main;
 
 import java.util.Optional;
@@ -68,11 +79,9 @@ public class MainView extends AppLayout {
         layout.getThemeList().set("spacing-s", true);
         layout.setAlignItems(FlexComponent.Alignment.STRETCH);
         VerticalLayout logoLayout = new VerticalLayout();
-//        HorizontalLayout logoLayout = new HorizontalLayout();
         logoLayout.setId("logo");
         logoLayout.setAlignItems(FlexComponent.Alignment.CENTER);
         logoLayout.add(new Image("images/Logo_DIMC.png", "DIMC logo"));
-//        logoLayout.add(new Image("images/logo.png", "My App logo"));
         logoLayout.add(new H1("Vaadin Demo"));
         layout.add(logoLayout, menu);
         return layout;

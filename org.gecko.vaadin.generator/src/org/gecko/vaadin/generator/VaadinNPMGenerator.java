@@ -23,6 +23,7 @@ import com.vaadin.flow.plugin.base.PluginAdapterBase;
 import com.vaadin.flow.plugin.base.PluginAdapterBuild;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.frontend.FrontendTools;
+import com.vaadin.flow.server.frontend.FrontendToolsSettings;
 import com.vaadin.flow.server.frontend.FrontendUtils;
 import com.vaadin.flow.server.frontend.installer.NodeInstaller;
 import com.vaadin.flow.server.frontend.scanner.ClassFinder;
@@ -106,7 +107,9 @@ public class VaadinNPMGenerator implements Generator<GeneratorOptions>, PluginAd
 
 			if (generateBundle()) {
 				logger.info(" - Run webpack ...");
-				BuildFrontendUtil.runWebpack(this);
+				FrontendToolsSettings settings = getFrontendToolsSettings(this);
+				FrontendTools tools = new FrontendTools(settings);
+				BuildFrontendUtil.runWebpack(this, tools);
 			}
 		} catch (Exception e) {
 			logger.error(e.getMessage());
@@ -192,28 +195,28 @@ public class VaadinNPMGenerator implements Generator<GeneratorOptions>, PluginAd
 	public boolean runNpmInstall() {
 		return true;
 	}
-
-    /**
-     * Copy the `webpack.generated.js` from the specified URL. Default is the
-     * template provided by this plugin. Set it to empty string to disable the
-     * feature.
-     * @Parameter(defaultValue = FrontendUtils.WEBPACK_GENERATED)
-     */
-	@Override
-	public String webpackGeneratedTemplate() {
-		return FrontendUtils.WEBPACK_GENERATED;
-	}
-
-	/**
-	 * Copy the `webpack.generated.js` from the specified URL. Default is the
-	 * template provided by this plugin. Set it to empty string to disable the
-	 * feature.
-	 * @Parameter(defaultValue = FrontendUtils.WEBPACK_GENERATED)
-	 */
-	@Override
-	public String webpackTemplate() {
-		return FrontendUtils.WEBPACK_CONFIG;
-	}
+//
+//    /**
+//     * Copy the `webpack.generated.js` from the specified URL. Default is the
+//     * template provided by this plugin. Set it to empty string to disable the
+//     * feature.
+//     * @Parameter(defaultValue = FrontendUtils.WEBPACK_GENERATED)
+//     */
+//	@Override
+//	public String webpackGeneratedTemplate() {
+//		return FrontendUtils.WEBPACK_GENERATED;
+//	}
+//
+//	/**
+//	 * Copy the `webpack.generated.js` from the specified URL. Default is the
+//	 * template provided by this plugin. Set it to empty string to disable the
+//	 * feature.
+//	 * @Parameter(defaultValue = FrontendUtils.WEBPACK_GENERATED)
+//	 */
+//	@Override
+//	public String webpackTemplate() {
+//		return FrontendUtils.WEBPACK_CONFIG;
+//	}
 
 	/**
      * Application properties file in Spring project.
@@ -539,5 +542,39 @@ public class VaadinNPMGenerator implements Generator<GeneratorOptions>, PluginAd
 	public String buildFolder() {
 		return "generated";
 	}
+
+	@Override
+	public File javaResourceFolder() {
+		return projectBaseDirectory().resolve("META-INF/resources/frontend").toFile();
+	}
+
+	@Override
+	public boolean nodeAutoUpdate() {
+		return false;
+	}
+
+	@Override
+	public boolean useGlobalPnpm() {
+		return false;
+	}
+
+	@Override
+	public List<String> postinstallPackages() {
+		return null;
+	}
+	
+    private static FrontendToolsSettings getFrontendToolsSettings(
+            PluginAdapterBase adapter) throws URISyntaxException {
+        FrontendToolsSettings settings = new FrontendToolsSettings(
+                adapter.npmFolder().getAbsolutePath(),
+                () -> FrontendUtils.getVaadinHomeDirectory().getAbsolutePath());
+        settings.setNodeDownloadRoot(adapter.nodeDownloadRoot());
+        settings.setNodeVersion(adapter.nodeVersion());
+        settings.setAutoUpdate(adapter.nodeAutoUpdate());
+        settings.setUseGlobalPnpm(adapter.useGlobalPnpm());
+        settings.setForceAlternativeNode(adapter.requireHomeNodeExec());
+
+        return settings;
+    }
 
 }

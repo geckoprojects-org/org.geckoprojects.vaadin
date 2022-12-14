@@ -1,0 +1,11 @@
+lib.version: 1.0
+
+-buildpath:  \
+	net.jcip:jcip-annotations;version=${lib.version}
+	
+Bundle-Version: ${lib.version}
+Bundle-Localization: bundle
+Bundle-Name: Re-packaged JCIP Annotations
+Bundle-Vendor: Java Concurrency In Action
+
+Export-Package: net.jcip*

@@ -5,16 +5,16 @@ Require-Capability: osgi.extender;filter:='(osgi.extender=osgi.configurator)'
 
 -buildpath: \
 	org.apache.felix.http.servlet-api;version=latest,\
-	org.gecko.vaadin.whiteboard.api;version=latest,\
 	com.vaadin.flow.server;version=latest,\
 	com.vaadin.flow.data;version=latest,\
 	com.vaadin.flow.client;version=latest,\
 	com.vaadin.flow.html.components;version=latest,\
+	com.vaadin.flow.theme.lumo;version=latest,\
+	com.vaadin.flow.theme.material;version=latest,\
+	com.vaadin.flow.component.shared;version=latest,\
 	com.vaadin.flow.component.button;version=latest,\
 	com.vaadin.flow.component.orderedlayout;version=latest,\
-	com.vaadin.flow.component.vaadinmaterialtheme;version=latest,\
 	com.vaadin.flow.component.notification;version=latest,\
-	com.vaadin.flow.component.vaadinlumotheme;version=latest,\
 	com.vaadin.flow.component.textfield;version=latest,\
 	com.vaadin.flow.component.applayout;version=latest,\
 	com.vaadin.flow.component.tabs;version=latest,\
@@ -24,7 +24,8 @@ Require-Capability: osgi.extender;filter:='(osgi.extender=osgi.configurator)'
 	com.vaadin.flow.component.customfield;version=latest,\
 	com.vaadin.flow.component.formlayout;version=latest,\
 	com.vaadin.flow.component.checkbox;version=latest,\
-	com.vaadin.external.gwt;version=latest
+	com.vaadin.external.gwt;version=latest,\
+	org.gecko.vaadin.whiteboard.api;version=snapshot
 
 -includeresource: \
 	OSGI-INF/configurator/=config/,\

@@ -18,8 +18,8 @@ import org.osgi.framework.namespace.IdentityNamespace;
 	@Requirement(namespace = IdentityNamespace.IDENTITY_NAMESPACE, filter = "(osgi.identity=com.vaadin.flow.client)"),
 	@Requirement(namespace = IdentityNamespace.IDENTITY_NAMESPACE, filter = "(osgi.identity=com.vaadin.flow.server)"),
 	@Requirement(namespace = IdentityNamespace.IDENTITY_NAMESPACE, filter = "(osgi.identity=com.vaadin.flow.html.components)"),
-	@Requirement(namespace = IdentityNamespace.IDENTITY_NAMESPACE, filter = "(osgi.identity=com.vaadin.flow.component.vaadinmaterialtheme)"),
-	@Requirement(namespace = IdentityNamespace.IDENTITY_NAMESPACE, filter = "(osgi.identity=com.vaadin.flow.component.vaadinlumotheme)"),
+	@Requirement(namespace = IdentityNamespace.IDENTITY_NAMESPACE, filter = "(osgi.identity=com.vaadin.flow.theme.material)"),
+	@Requirement(namespace = IdentityNamespace.IDENTITY_NAMESPACE, filter = "(osgi.identity=com.vaadin.flow.theme.lumo)"),
 	@Requirement(namespace = Constants.VAADIN_CAPABILITY_NAMESPACE, filter = "(vaadin.osgi=" + Constants.VAADIN_CAPABILITY_WHITEBOARD + ")")
 })
 public @interface RequireVaadinFlow {

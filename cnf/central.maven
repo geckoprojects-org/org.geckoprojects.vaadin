@@ -8,7 +8,7 @@ org.geckoprojects.bnd:org.gecko.bnd.jacoco.library:1.2.0
 org.osgi:org.osgi.annotation.bundle:1.1.0
 org.osgi:org.osgi.annotation.versioning:1.1.2
 org.osgi:org.osgi.dto:1.1.1
-org.osgi:org.osgi.framework:1.8.0
+org.osgi:org.osgi.framework:1.10.0
 org.osgi:org.osgi.jmx:1.1.0
 org.osgi:org.osgi.namespace.contract:1.0.0
 org.osgi:org.osgi.namespace.extender:1.0.1
@@ -112,6 +112,7 @@ com.vaadin:vaadin-upload-flow:23.3.0
 com.vaadin:vaadin-lumo-theme:23.3.0
 com.vaadin:vaadin-material-theme:23.3.0
 com.vaadin:vaadin-flow-components-base:23.3.0
+com.vaadin:vaadin-renderer-flow:23.3.0
 
 com.vaadin:flow-html-components:23.3.0
 com.vaadin:flow-server:23.3.0
@@ -120,6 +121,7 @@ com.vaadin:flow-dnd:23.3.0
 com.vaadin:flow-polymer-template:23.3.0
 com.vaadin:flow-lit-template:23.3.0
 com.vaadin:flow-push:23.3.0
+com.vaadin:flow-data:23.3.0
 com.vaadin:flow-data:23.3.0
 com.vaadin:flow-plugin-base:23.3.0
 
@@ -133,8 +135,11 @@ org.ow2.asm:asm-tree:9.4
 org.ow2.asm:asm-analysis:9.4
 org.ow2.asm:asm:9.4
 
-# Vaadin dependencies
+# Bnd
 biz.aQute.bnd:biz.aQute.bndlib:6.4.0
+biz.aQute.bnd:biz.aQute.bnd.annotation:6.4.0
+
+# Vaadin dependencies
 org.checkerframework:checker-qual:3.28.0
 com.fasterxml.jackson.core:jackson-annotations:2.14.1
 com.fasterxml.jackson.core:jackson-core:2.14.1
@@ -162,8 +167,9 @@ jakarta.validation:jakarta.validation-api:2.0.2
 org.javassist:javassist:3.29.2-GA
 net.bytebuddy:byte-buddy:1.12.19
 org.apache.commons:commons-compress:1.22
+commons-codec:commons-codec:1.15
 commons-logging:commons-logging:1.2
-commons-io:commons-io:2.5
+commons-io:commons-io:2.11.0
 commons-fileupload:commons-fileupload:1.4
 org.apache.httpcomponents:httpcore-osgi:4.4.16
 org.apache.httpcomponents:httpclient-osgi:4.5.14

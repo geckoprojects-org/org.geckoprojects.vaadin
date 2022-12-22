@@ -1,10 +1,10 @@
 /**
- * Copyright (c) 2012 - 2021 Data In Motion and others.
+ * Copyright (c) 2012 - 2022 Data In Motion and others.
  * All rights reserved. 
  * 
  * This program and the accompanying materials are made available under the terms of the 
- * Eclipse Public License v1.0 which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * Eclipse Public License v2.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v20.html
  * 
  * Contributors:
  *     Data In Motion - initial API and implementation
@@ -55,7 +55,6 @@ public class ReferenceCollector implements ServiceTrackerCustomizer<Object, Obje
 	private final Map<ServiceReference<?>, ServiceReferenceEvent> contentReferences = new ConcurrentHashMap<>(); 
 	@SuppressWarnings("rawtypes")
 	private SimplePushEventSource<ServiceReferenceEvent> source; 
-
 	private ReferenceCollectionConfig config;
 	private BundleContext context; 
 	private VaadinDispatcher dispatcher = null;
@@ -199,13 +198,12 @@ public class ReferenceCollector implements ServiceTrackerCustomizer<Object, Obje
 	private void handleComponentReferences(final VaadinDispatcher dispatcher, ServiceReferenceEvent<Object> sre) {
 		Map<String, Object> properties = VaadinHelper.getServiceProperties(sre.getReference());
 		ServiceObjects<Object> so = context.getServiceObjects(sre.getReference());
+		logger.fine("Handle resource " + sre.getType() + " properties: " + properties);
 		switch (sre.getType()) {
 		case ADD:
-			logger.fine("Handle resource " + sre.getType() + " properties: " + properties);
 			dispatcher.addComponent(so, properties);
 			break;
 		case MODIFY:
-			logger.fine("Handle resource " + sre.getType() + " properties: " + properties);
 			dispatcher.modifyComponent(so, properties);
 			break;
 		default:

@@ -1,10 +1,10 @@
 /**
- * Copyright (c) 2012 - 2021 Data In Motion and others.
+ * Copyright (c) 2012 - 2022 Data In Motion and others.
  * All rights reserved. 
  * 
  * This program and the accompanying materials are made available under the terms of the 
- * Eclipse Public License v1.0 which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * Eclipse Public License v2.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v20.html
  * 
  * Contributors:
  *     Data In Motion - initial API and implementation
@@ -22,28 +22,34 @@ import java.util.stream.Collectors;
 import org.gecko.vaadin.whiteboard.registry.FrontendRegistry.FrontendEntry;
 import org.osgi.framework.Constants;
 import org.osgi.framework.ServiceObjects;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ServiceScope;
 
 import com.vaadin.flow.server.PWA;
+import com.vaadin.flow.server.VaadinContext;
 import com.vaadin.flow.server.startup.ApplicationRouteRegistry;
 
-@Component(service = {ApplicationRouteRegistry.class, ServiceObjectRegistry.class}, scope = ServiceScope.PROTOTYPE)
+/**
+ * Whiteboard version of the {@link ApplicationRouteRegistry}, that can deal with services as incoming classes.
+ * It also works as {@link ServiceObjectRegistry}
+ * 
+ * @author Mark Hoffmann
+ */
 public class WhiteboardApplicationRouteRegistry extends ApplicationRouteRegistry implements ServiceObjectRegistry<Object> {
 
 	private static final Logger logger = Logger.getLogger(WhiteboardApplicationRouteRegistry.class.getName());
 	private static final long serialVersionUID = 1L;
-	@Reference
-	private FrontendRegistry frontendRegistry;
+	private final FrontendRegistry frontendRegistry;
+	private final Map<Long, ServiceObjectHolder> serviceObjectMap = new ConcurrentHashMap<>();
+	private final Map<Long, Class<?>> componentMap = new ConcurrentHashMap<>();
+	private final AtomicLong changeCount = new AtomicLong(0l);
 
-	private Map<Long, ServiceObjectHolder> serviceObjectMap = new ConcurrentHashMap<>();
-	private Map<Long, Class<?>> componentMap = new ConcurrentHashMap<>();
-	private AtomicLong changeCount = new AtomicLong(0l);
+	public WhiteboardApplicationRouteRegistry(VaadinContext context, FrontendRegistry frontendRegistry) {
+		super(context);
+		this.frontendRegistry = frontendRegistry;
+		updateRegistry(context);
+	}
 
-	@Deactivate
-	public void deactivate() {
+	public void clean() {
+		super.clean();
 		serviceObjectMap.clear();
 		componentMap.clear();
 		changeCount.set(0);
@@ -123,6 +129,29 @@ public class WhiteboardApplicationRouteRegistry extends ApplicationRouteRegistry
 	@Override
 	public ApplicationRouteRegistry getRouteRegistry() {
 		return this;
+	}
+
+	/**
+	 * Presets our {@link WhiteboardApplicationRouteRegistry} to be used in Vaadin now
+	 * @param context the {@link VaadinContext}
+	 */
+	private void updateRegistry(VaadinContext context) {
+		ApplicationRouteRegistryWrapper attribute;
+		synchronized (context) {
+			attribute = context
+					.getAttribute(ApplicationRouteRegistryWrapper.class);
+			
+			if (attribute == null || !attribute.getRegistry().equals(this)) {
+				if (attribute == null) {
+					logger.info("Setting WhiteboardApplicationRouteRegistry to VaadinContext");
+				} else {
+					logger.info("Replacing existing ApplicationRouteRegistry through WhiteboardApplicationRouteRegistry");
+				}
+				attribute = new ApplicationRouteRegistryWrapper(this);
+				context.setAttribute(attribute);
+			}
+		}
+		
 	}
 
 	private synchronized ServiceObjectHolder updateComponentMap(ServiceObjects<Object> serviceObjects, Map<String, Object> properties) {

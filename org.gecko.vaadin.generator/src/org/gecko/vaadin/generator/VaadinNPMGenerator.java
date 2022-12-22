@@ -1,12 +1,24 @@
+/**
+ * Copyright (c) 2012 - 2022 Data In Motion and others.
+ * All rights reserved. 
+ * 
+ * This program and the accompanying materials are made available under the terms of the 
+ * Eclipse Public License v2.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v20.html
+ * 
+ * Contributors:
+ *     Data In Motion - initial API and implementation
+ */
 package org.gecko.vaadin.generator;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -16,7 +28,10 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
+
+import org.reflections.util.ConfigurationBuilder;
 
 import com.vaadin.flow.plugin.base.BuildFrontendUtil;
 import com.vaadin.flow.plugin.base.PluginAdapterBase;
@@ -27,6 +42,7 @@ import com.vaadin.flow.server.frontend.FrontendToolsSettings;
 import com.vaadin.flow.server.frontend.FrontendUtils;
 import com.vaadin.flow.server.frontend.installer.NodeInstaller;
 import com.vaadin.flow.server.frontend.scanner.ClassFinder;
+import com.vaadin.flow.utils.FlowFileUtils;
 
 import aQute.bnd.build.Container;
 import aQute.bnd.build.Project;
@@ -38,15 +54,23 @@ import aQute.bnd.service.externalplugin.ExternalPlugin;
 import aQute.bnd.service.generate.BuildContext;
 import aQute.bnd.service.generate.Generator;
 
+/**
+ * Bnd generator as external plugin that is capable to generate Vaadins Frontend JS code
+ * @author Mark Hoffmann
+ *
+ */
+@SuppressWarnings("restriction")
 @ExternalPlugin(name = "geckoVaadinNPM", objectClass = Generator.class)
 public class VaadinNPMGenerator implements Generator<GeneratorOptions>, PluginAdapterBase, PluginAdapterBuild {
 
-	private static final String[] CLEANUP_RESOURCES = new String[] {"types.d.ts", "webpack.config.js", "webpack.generated.js", "tsconfig.json", "pnpm-lock.yaml", "pnpmfile.js", "package.json", ".npmrc", "generated/index.html", "generated/index.ts", "generated/sw.ts", "generated/plugins/", "generated/flow-frontend/", "generated/frontend/", "node_modules/", "frontend/"};
+	private static final String[] CLEANUP_RESOURCES = new String[] {"vite.config.ts", "vite.generated.ts", "types.d.ts", "webpack.config.js", "webpack.generated.js", "tsconfig.json", "pnpm-lock.yaml", "pnpmfile.js", "package.json", ".npmrc", "generated/index.html", "generated/index.ts", "generated/sw.ts", "generated/plugins/", "generated/flow-frontend/", "generated/frontend/", "node_modules/", "frontend/"};
 	public static final String INCLUDE_FROM_COMPILE_DEPS_REGEX = ".*(/|\\\\)(portlet-api|javax\\.servlet-api)-.+jar$";
+	public static List<String> SCAN_EXCLUDES_PATH = List.of("org/apache", "com/google", "org.zeroturnaround", "biz.aQute", "javassist", "net.bytebuddy", "org.slf4j");
 
 	private GeneratorLogger logger;
 	private Project project;
 	private File basePath;
+	private ClassFinder classFinder;
 
 
 	@Override
@@ -106,16 +130,15 @@ public class VaadinNPMGenerator implements Generator<GeneratorOptions>, PluginAd
 			BuildFrontendUtil.runNodeUpdater(this);
 
 			if (generateBundle()) {
-				logger.info(" - Run webpack ...");
+				logger.info(" - Run frontend build ...");
 				FrontendToolsSettings settings = getFrontendToolsSettings(this);
-				FrontendTools tools = new FrontendTools(settings);
-				BuildFrontendUtil.runWebpack(this, tools);
+		        FrontendTools tools = new FrontendTools(settings);
+		        tools.validateNodeAndNpmVersion();
+		        BuildFrontendUtil.runVite(this, tools);
 			}
-		} catch (Exception e) {
-			logger.error(e.getMessage());
-			e.printStackTrace();
-		} finally {
 			logger.info("Finished generating frontend");
+		} catch (Exception e) {
+			logger.error("Error generating Vaadin Frontend " + e.getMessage(), e);
 		}
 	}
 	
@@ -278,16 +301,18 @@ public class VaadinNPMGenerator implements Generator<GeneratorOptions>, PluginAd
      */
 	@Override
 	public ClassFinder getClassFinder() {
-
+		if (classFinder != null) {
+			return classFinder;
+		}
 		try {
 			logInfo("Getting class finder");
-			List<String> cp = new ArrayList<>();
-			getJarFiles().stream().map(File::getAbsolutePath).forEach(cp::add);
-			ClassFinder f = BuildFrontendUtil.getClassFinder(cp);
+			List<String> cp = getJarFiles().stream().map(File::getAbsolutePath).collect(Collectors.toList());
+			ClassFinder f = doGetClassFinder(cp);
 			try {
 				f.loadClass(Route.class.getName());
+				classFinder = f;
 			} catch (ClassNotFoundException e) {
-				logError("Cannot find Route.class", e);
+				logError("Cannot load Route.class with class finder", e);
 			}
 			return f;
 			
@@ -296,8 +321,24 @@ public class VaadinNPMGenerator implements Generator<GeneratorOptions>, PluginAd
 			return null;
 		}
 	}
+	
+	private ClassFinder doGetClassFinder(List<String> classpathElements) {
+    	URL[] urls = classpathElements.stream().distinct().map(File::new)
+                .map(FlowFileUtils::convertToUrl).toArray(URL[]::new);
+    	ClassLoader cl = new URLClassLoader(urls, getClass().getClassLoader());
+    	ClassLoader ctxClassLoader = new URLClassLoader(urls,
+                Thread.currentThread().getContextClassLoader());
+        ConfigurationBuilder configurationBuilder = new ConfigurationBuilder()
+                .addClassLoaders(cl, ctxClassLoader).setExpandSuperTypes(false)
+                .addUrls(urls);
+        Predicate<String> filter = resourceName -> !SCAN_EXCLUDES_PATH.contains(resourceName)
+        		&& resourceName.endsWith(".class")
+                && !resourceName.endsWith("module-info.class");
+        configurationBuilder.setInputsFilter(filter);
+		return new GeneratorClassFinder(configurationBuilder, cl);
+	}
 
-    /**
+	/**
      * The Jar Files that would be searched.
      *
      * @return {@link Set} of {@link File}
@@ -306,11 +347,9 @@ public class VaadinNPMGenerator implements Generator<GeneratorOptions>, PluginAd
 	public Set<File> getJarFiles() {
 		Collection<Container> buildpath;
 		try {
-//			buildpath = context.getProject().getBuildpath();
 			String bsn = project.getName();
 			Set<String> filterSet = new HashSet<String>();
 			filterSet.add(bsn + ".jar");
-			filterSet.add("org.gecko.vaadin.whiteboard.push.jar");
 			filterSet.add("org.gecko.vaadin.whiteboard.api.jar");
 			filterSet.add("org.gecko.vaadin.whiteboard.jar");
 			buildpath = project.getRunbundles();
@@ -475,7 +514,7 @@ public class VaadinNPMGenerator implements Generator<GeneratorOptions>, PluginAd
      */
 	@Override
 	public boolean pnpmEnable() {
-		return true;
+		return false;
 	}
 
     /**
@@ -545,7 +584,7 @@ public class VaadinNPMGenerator implements Generator<GeneratorOptions>, PluginAd
 
 	@Override
 	public File javaResourceFolder() {
-		return projectBaseDirectory().resolve("META-INF/resources/frontend").toFile();
+		return projectBaseDirectory().resolve("resources").toFile();
 	}
 
 	@Override
@@ -560,7 +599,7 @@ public class VaadinNPMGenerator implements Generator<GeneratorOptions>, PluginAd
 
 	@Override
 	public List<String> postinstallPackages() {
-		return null;
+		return Collections.emptyList();
 	}
 	
     private static FrontendToolsSettings getFrontendToolsSettings(

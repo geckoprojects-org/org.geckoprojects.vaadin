@@ -1,10 +1,10 @@
 /**
- * Copyright (c) 2012 - 2021 Data In Motion and others.
+ * Copyright (c) 2012 - 2022 Data In Motion and others.
  * All rights reserved. 
  * 
  * This program and the accompanying materials are made available under the terms of the 
- * Eclipse Public License v1.0 which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * Eclipse Public License v2.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v20.html
  * 
  * Contributors:
  *     Data In Motion - initial API and implementation
@@ -18,7 +18,7 @@ import javax.servlet.ServletException;
 
 import org.gecko.vaadin.whiteboard.registry.ServiceObjectRegistry;
 import org.gecko.vaadin.whiteboard.registry.ServiceObjectRegistry.ServiceObjectHolder;
-import org.gecko.vaadin.whiteboard.spi.VaadinWhiteboardRegistryProcessor;
+import org.gecko.vaadin.whiteboard.spi.WhiteboardApplicationProcessor;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.wiring.BundleWiring;
 
@@ -38,11 +38,11 @@ import com.vaadin.flow.server.VaadinServletService;
 public class WhiteboardVaadinServlet extends VaadinServlet {
 
 	private static final long serialVersionUID = -2046657111200016595L;
-	private final VaadinWhiteboardRegistryProcessor processor;
+	private final WhiteboardApplicationProcessor processor;
 	private final BundleContext context;
 	private final ServiceObjectHolder holder;
 	
-	public WhiteboardVaadinServlet(VaadinWhiteboardRegistryProcessor processor, ServiceObjectRegistry.ServiceObjectHolder holder) {
+	public WhiteboardVaadinServlet(WhiteboardApplicationProcessor processor, ServiceObjectRegistry.ServiceObjectHolder holder) {
 		this.processor = processor;
 		this.holder = holder;
 		this.context = holder.frontend.getBundleContext();

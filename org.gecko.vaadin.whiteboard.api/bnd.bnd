@@ -1,4 +1,6 @@
--buildpath: org.osgi.framework
+-buildpath: \
+	org.osgi.framework,\
+	com.vaadin.flow.server
 -baseline: *
 
 Export-Package: \

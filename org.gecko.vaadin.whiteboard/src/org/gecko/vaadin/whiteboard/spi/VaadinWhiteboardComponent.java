@@ -1,10 +1,10 @@
 /**
- * Copyright (c) 2012 - 2021 Data In Motion and others.
+ * Copyright (c) 2012 - 2022 Data In Motion and others.
  * All rights reserved. 
  * 
  * This program and the accompanying materials are made available under the terms of the 
- * Eclipse Public License v1.0 which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * Eclipse Public License v2.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v20.html
  * 
  * Contributors:
  *     Data In Motion - initial API and implementation
@@ -12,6 +12,7 @@
 package org.gecko.vaadin.whiteboard.spi;
 
 import static org.gecko.vaadin.whiteboard.Constants.CM_WHITEBOARD;
+import static org.gecko.vaadin.whiteboard.Constants.REF_NAME_APPLICATION_PROCESSOR;
 import static org.gecko.vaadin.whiteboard.Constants.REF_NAME_REFERENCE_COLLECTOR;
 import static org.gecko.vaadin.whiteboard.Constants.VAADIN_APPLICATION_CONTEXT;
 import static org.gecko.vaadin.whiteboard.Constants.VAADIN_APPLICATION_NAME;
@@ -42,31 +43,35 @@ import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceScope;
 import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 
 import com.vaadin.flow.router.HasErrorParameter;
 import com.vaadin.flow.router.InternalServerError;
 import com.vaadin.flow.router.RouteNotFoundError;
 
+/**
+ * The Vaadin whiteboard component, gathers all Vaadin components as OSGi service via the {@link ReferenceCollector}.
+ * It applies the changes for added, modified or removed UI components. 
+ * @author Mark Hoffmann
+ *
+ */
 @Component(immediate = true, configurationPolicy = ConfigurationPolicy.REQUIRE, name = CM_WHITEBOARD, service = VaadinWhiteboard.class)
 public class VaadinWhiteboardComponent implements VaadinDispatcher, VaadinWhiteboard {
 
 	private static final Logger logger = Logger.getLogger(VaadinWhiteboardComponent.class.getName());
 
-	@Reference(scope = ReferenceScope.PROTOTYPE)
-	private VaadinWhiteboardRegistryProcessor startupProcessor;
-	//	@Reference(name = REF_NAME_FRONTEND_RESOURCE)
-	//	private VaadinResourceProvider frontendProvider;
+	private final ReentrantLock lock = new ReentrantLock();
+	private final AtomicLong changeCount = new AtomicLong(0l);
+	@Reference(name = REF_NAME_APPLICATION_PROCESSOR)
+	private WhiteboardApplicationProcessor applicationProcessor;
 	@Reference(name = REF_NAME_REFERENCE_COLLECTOR)
 	private ReferenceCollector referenceCollector;
+
 	private String applicationName;
 	private String contextPath;
 	private String whiteboardTarget;
-	private AtomicLong changeCount = new AtomicLong(0l);
-	private transient long version = 0;
-	private ReentrantLock lock = new ReentrantLock();
 	private ServiceRegistration<Servlet> servletRegistration;
+	private transient long version = 0;
 
 	@Activate
 	public void activate(VaadinApplicationConfig config, BundleContext context) throws ConfigurationException {
@@ -74,14 +79,12 @@ public class VaadinWhiteboardComponent implements VaadinDispatcher, VaadinWhiteb
 		initializeVaadin();
 		logger.info("Activating whiteboard for application " + applicationName);
 		referenceCollector.connect(this);
-//		registerServlet(context);
 	}
 
 	@Modified
 	public void modified(VaadinApplicationConfig config, BundleContext context) throws ConfigurationException {
 		logger.info("Modified whiteboard for application " + applicationName);
 		configure(config);
-		//		updateServletRegistration();
 	}
 
 	@Deactivate
@@ -136,15 +139,15 @@ public class VaadinWhiteboardComponent implements VaadinDispatcher, VaadinWhiteb
 
 	@Override
 	public void batchDispatch() {
-		if (version == startupProcessor.getServiceObjectRegistry().getVersion()) {
+		if (version == applicationProcessor.getServiceObjectRegistry().getVersion()) {
 			return;
 		} else {
-			version = startupProcessor.getServiceObjectRegistry().getVersion();
+			version = applicationProcessor.getServiceObjectRegistry().getVersion();
 		}
 		if (lock.tryLock()) {
 			try {
 				logger.log(Level.INFO, "Dispatching routes");
-				startupProcessor.process();
+				applicationProcessor.process();
 			} finally {
 				lock.unlock();
 			}
@@ -153,7 +156,7 @@ public class VaadinWhiteboardComponent implements VaadinDispatcher, VaadinWhiteb
 	}
 
 	private synchronized ServiceObjectRegistry.ServiceObjectHolder updateComponentMap(ServiceObjects<Object> serviceObjects, Map<String, Object> properties) {
-		ServiceObjectRegistry<Object> registry = startupProcessor.getServiceObjectRegistry();
+		ServiceObjectRegistry<Object> registry = applicationProcessor.getServiceObjectRegistry();
 		if (registry == null) {
 			logger.severe("Service object registry is null");
 			return null;
@@ -167,11 +170,11 @@ public class VaadinWhiteboardComponent implements VaadinDispatcher, VaadinWhiteb
 
 	private void registerServlet(ServiceObjectRegistry.ServiceObjectHolder holder) {
 		BundleContext context = holder.frontend.getBundleContext();
-		WhiteboardVaadinServlet servlet = new WhiteboardVaadinServlet(startupProcessor, holder);
+		WhiteboardVaadinServlet servlet = new WhiteboardVaadinServlet(applicationProcessor, holder);
 		Dictionary<String, Object> properties = getServletProperties();
 		servletRegistration = context.registerService(Servlet.class, servlet, properties);
 	}
-
+	
 	private void configure(VaadinApplicationConfig config) throws ConfigurationException {
 		boolean changed = false;
 		String v = config.vaadin_application_name();
@@ -188,7 +191,7 @@ public class VaadinWhiteboardComponent implements VaadinDispatcher, VaadinWhiteb
 		} 
 		if (!v.equals(contextPath)) {
 			contextPath = v;
-			validate(contextPath);
+			contextPath = VaadinHelper.validate(contextPath);
 			changed = true;
 		}
 		String target = config.vaadin_whiteboard_target();
@@ -204,38 +207,12 @@ public class VaadinWhiteboardComponent implements VaadinDispatcher, VaadinWhiteb
 		}
 	}
 
-	/**
-	 * Updates the servlet registration
-	 */
-	//	private void updateServletRegistration() {
-	//		if (servletRegistration != null) {
-	//			Dictionary<String, Object> properties = getServletProperties();
-	//			servletRegistration.setProperties(properties);
-	//		}
-	//	}
-
-	private void validate(String context) {
-		if (context == null) {
-			return;
-		}
-		if (!context.startsWith("/")) {
-			context = "/" + context;
-		}
-		if (context.endsWith("/")) {
-			context += "*";
-		} else {
-			if (!context.endsWith("/*")) {
-				context += "/*";
-			}
-		}
-	}
-
 	private void initializeVaadin() {
 		Set<Class<?>> classes = new HashSet<Class<?>>();
 		classes.add(HasErrorParameter.class);
 		classes.add(RouteNotFoundError.class);
 		classes.add(InternalServerError.class);
-		startupProcessor.process(classes, true);
+		applicationProcessor.process(classes);
 	}
 
 	private Dictionary<String, Object> getServletProperties() {
@@ -251,5 +228,5 @@ public class VaadinWhiteboardComponent implements VaadinDispatcher, VaadinWhiteb
 		}
 		return properties;
 	}
-
+	
 }

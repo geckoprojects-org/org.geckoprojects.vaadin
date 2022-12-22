@@ -1,10 +1,10 @@
 /**
- * Copyright (c) 2012 - 2021 Data In Motion and others.
+ * Copyright (c) 2012 - 2022 Data In Motion and others.
  * All rights reserved. 
  * 
  * This program and the accompanying materials are made available under the terms of the 
- * Eclipse Public License v1.0 which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * Eclipse Public License v2.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v20.html
  * 
  * Contributors:
  *     Data In Motion - initial API and implementation
@@ -34,15 +34,15 @@ import com.vaadin.flow.server.VaadinSession;
  * @author Mark Hoffmann
  *
  */
-public class OSGiInstantiator extends DefaultInstantiator implements SessionDestroyListener {
+public class OSGiServiceInstantiator extends DefaultInstantiator implements SessionDestroyListener {
 
 	private static final long serialVersionUID = 1646678691680462434L;
-	private static final Logger logger = Logger.getLogger(OSGiInstantiator.class.getName());
+	private static final Logger logger = Logger.getLogger(OSGiServiceInstantiator.class.getName());
 	private static final String INSTANCE_LIST = "vaadin.osgi.instantiator.objects";
 	private static final String INSTANCE_CLASS = "vaadin.osgi.object.%s";
 	private final ServiceObjectRegistry<Object> serviceObjectRegistry;
 
-	public OSGiInstantiator(VaadinService service, ServiceObjectRegistry<Object> serviceObjectRegistry) {
+	public OSGiServiceInstantiator(VaadinService service, ServiceObjectRegistry<Object> serviceObjectRegistry) {
 		super(service);
 		service.addSessionDestroyListener(this);
 		this.serviceObjectRegistry = serviceObjectRegistry;
@@ -60,7 +60,6 @@ public class OSGiInstantiator extends DefaultInstantiator implements SessionDest
 			logger.severe("Cannot create a instance object that is not disposable because of a null VaadinSession");
 			return null;
 		}
-//		session.getSession().setMaxInactiveInterval(5);
 		releaseServiceInstance(session, type.getName());
 		
 		/*
@@ -77,7 +76,7 @@ public class OSGiInstantiator extends DefaultInstantiator implements SessionDest
 	}
 
 	/**
-	 *Cleans service objects up on session destroy
+	 * Cleans service objects up on session destroy
 	 */
 	@SuppressWarnings("unchecked")
 	@Override

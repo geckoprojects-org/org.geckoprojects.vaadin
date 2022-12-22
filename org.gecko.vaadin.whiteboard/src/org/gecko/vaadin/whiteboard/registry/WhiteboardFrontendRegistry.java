@@ -1,10 +1,10 @@
 /**
- * Copyright (c) 2012 - 2021 Data In Motion and others.
+ * Copyright (c) 2012 - 2022 Data In Motion and others.
  * All rights reserved. 
  * 
  * This program and the accompanying materials are made available under the terms of the 
- * Eclipse Public License v1.0 which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * Eclipse Public License v2.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v20.html
  * 
  * Contributors:
  *     Data In Motion - initial API and implementation
@@ -45,8 +45,6 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
 public class WhiteboardFrontendRegistry implements FrontendRegistry {
 	
 	private static final Logger logger = Logger.getLogger(WhiteboardFrontendRegistry.class.getName());
-	
-	
 	
 	class FrontendBundleTracker extends BundleTracker<Bundle> {
 
@@ -131,21 +129,6 @@ public class WhiteboardFrontendRegistry implements FrontendRegistry {
 			return null;
 		}
 		
-//		private void info(BundleCapability c) {
-//			System.err.println("Capability: " + c);
-//			Bundle bundle = c.getRevision().getBundle();
-//			BundleWiring wiring = bundle.adapt(BundleWiring.class);
-//			if (isFragment(c)) {
-//				System.err.println("Fragment: " + bundle.getSymbolicName());
-//				Optional<BundleWire> hostWire = wiring.getRequiredWires(HostNamespace.HOST_NAMESPACE).stream().findFirst();
-//				if (hostWire.isPresent()) {
-//					BundleWiring hw = hostWire.get().getProviderWiring();
-//					System.err.println("Host Bundle: " + hw.getBundle().getSymbolicName());
-//				}
-//			}
-//			
-//		}
-
 	}
 	
 	private volatile Map<BundleCapability, FrontendEntry> frontends = new ConcurrentHashMap<>();

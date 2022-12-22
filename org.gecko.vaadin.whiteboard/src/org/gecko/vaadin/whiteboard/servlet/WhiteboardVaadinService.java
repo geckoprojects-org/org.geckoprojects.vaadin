@@ -1,10 +1,10 @@
 /**
- * Copyright (c) 2012 - 2021 Data In Motion and others.
+ * Copyright (c) 2012 - 2022 Data In Motion and others.
  * All rights reserved. 
  * 
  * This program and the accompanying materials are made available under the terms of the 
- * Eclipse Public License v1.0 which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * Eclipse Public License v2.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v20.html
  * 
  * Contributors:
  *     Data In Motion - initial API and implementation
@@ -14,21 +14,25 @@ package org.gecko.vaadin.whiteboard.servlet;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.List;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.gecko.vaadin.whiteboard.di.OSGiInstantiator;
+import org.gecko.vaadin.whiteboard.di.OSGiServiceInstantiator;
 import org.gecko.vaadin.whiteboard.registry.ServiceObjectRegistry;
 import org.gecko.vaadin.whiteboard.registry.ServiceObjectRegistry.ServiceObjectHolder;
-import org.gecko.vaadin.whiteboard.spi.VaadinWhiteboardRegistryProcessor;
+import org.gecko.vaadin.whiteboard.spi.WhiteboardApplicationProcessor;
 
 import com.vaadin.flow.di.Instantiator;
 import com.vaadin.flow.function.DeploymentConfiguration;
 import com.vaadin.flow.server.PwaRegistry;
+import com.vaadin.flow.server.RequestHandler;
 import com.vaadin.flow.server.RouteRegistry;
 import com.vaadin.flow.server.ServiceException;
 import com.vaadin.flow.server.VaadinServlet;
 import com.vaadin.flow.server.VaadinServletService;
+import com.vaadin.flow.server.communication.IndexHtmlRequestHandler;
 
 public class WhiteboardVaadinService extends VaadinServletService {
 
@@ -39,7 +43,7 @@ public class WhiteboardVaadinService extends VaadinServletService {
 
 	public WhiteboardVaadinService(VaadinServlet servlet,
 			DeploymentConfiguration deploymentConfiguration, 
-			VaadinWhiteboardRegistryProcessor processor, ServiceObjectRegistry.ServiceObjectHolder holder) {
+			WhiteboardApplicationProcessor processor, ServiceObjectRegistry.ServiceObjectHolder holder) {
 		super(servlet, deploymentConfiguration);
 		this.holder = holder;
 		this.serviceObjectRegistry = processor.getServiceObjectRegistry();
@@ -55,7 +59,7 @@ public class WhiteboardVaadinService extends VaadinServletService {
 				PwaRegistry pwaRegistry = new PwaRegistry(holder.pwa, getServlet().getServletContext());
 				return pwaRegistry;
 			} catch (IOException e) {
-				logger.log(Level.SEVERE, "Error initializing PWA regsitry", e);
+				logger.log(Level.SEVERE, "Error initializing PWA registry", e);
 			}
 		}
 		return super.getPwaRegistry();
@@ -69,80 +73,33 @@ public class WhiteboardVaadinService extends VaadinServletService {
 	@Override
 	protected Instantiator createInstantiator() throws ServiceException {
 		return loadInstantiators().orElseGet(() -> {
-			OSGiInstantiator defaultInstantiator = new OSGiInstantiator(
+			OSGiServiceInstantiator defaultInstantiator = new OSGiServiceInstantiator(
 					this, serviceObjectRegistry);
 			defaultInstantiator.init(this);
 			return defaultInstantiator;
 		});
 	}
+	
+//	@Override
+//	protected List<RequestHandler> createRequestHandlers() throws ServiceException {
+//		List<RequestHandler> handlers = super.createRequestHandlers();
+//		RequestHandler htmlHandler = handlers.stream().filter(IndexHtmlRequestHandler.class::isInstance).findFirst().orElse(null);
+//		
+//	}
 
-
-	//	/**
-	//	 * By-passing the default mechanism and look also into our frontend provider, if no data was found using the ordniary way
-	//	 */
-	//	@Override
-	//	public InputStream getResourceAsStream(String path, WebBrowser browser,
-	//			AbstractTheme theme) {
-	//		InputStream is = super.getResourceAsStream(path, browser, theme);
-	//		if (is == null) {
-	//			logger.fine("Cannot get resource stream using the old way for path: " + path + ", using frontned provider instead");
-	//			//			String resolved = resolveResource(path, browser);
-	//			String resolved = getThemedOrRawPath(path, browser, theme);
-	//			URL url = frontendProvider.getResource(resolved);
-	//			if (url != null) {
-	//				try {
-	//					is = url.openConnection().getInputStream();
-	//				} catch (IOException e) {
-	//					logger.log(Level.SEVERE, "Cannot open stream for path " + resolved, e);
-	//				}
-	//			}
-	//		}
-	//		logger.finer("Return resource stream " + is + " for path " + path);
-	//		return is;
-	//	}
 	/**
-	 * By-passing the default mechanism and look also into our frontend provider, if no data was found using the ordniary way
+	 * By-passing the default mechanism and look also into our frontend provider, if no data was found using the ordinary way
 	 */
 	@Override
 	public InputStream getResourceAsStream(String path) {
-		System.out.println("resource " + path);
 		InputStream is = super.getResourceAsStream(path);
-		//		if (is == null) {
-		//			logger.info("Cannot get resource stream using the old way for path: " + path + ", using frontend provider instead");
-		//			URL url = frontendProvider.getResource(path);
-		//			if (url != null) {
-		//				try {
-		//					is = url.openConnection().getInputStream();
-		//				} catch (IOException e) {
-		//					logger.log(Level.SEVERE, "Cannot open stream for path " + path, e);
-		//				}
-		//			}
-		//		}
-		logger.severe("Return resource stream " + is + " for path " + path);
+		logger.severe("Get resource stream was called!!! Path: " + path);
 		return is;
 	}
 
-	//	@Override
-	//	public URL getResource(String path, WebBrowser browser, AbstractTheme theme) {
-	//		String resolved = getThemedOrRawPath(path, browser, theme);
-	//		URL url = frontendProvider.getResource(resolved);
-	//		if (url == null) {
-	//			logger.fine("Cannot get resource using frontend provider" + path + ", using old way instead");
-	//			url = super.getResource(path, browser, theme);
-	//		}
-	//		logger.finer("Return resource URL" + (url == null ? null : url.toString()));
-	//		return url;
-	//	}
 	@Override
 	public URL getResource(String path) {
-		logger.severe("GET RESOURCE" + path);
-		//		URL url = frontendProvider.getResource(path);
-		//		if (url == null) {
-		//			logger.info("Cannot get resource using frontend provider" + path + ", using old way instead");
-		//			url = super.getResource(path);
-		//		}
-		//		logger.info("Return resource URL" + (url == null ? null : url.toString()));
-		//		return url;
+		logger.severe("Get resource was called!!! Path: " + path);
 		return null;
 	}
 

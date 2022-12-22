@@ -5,7 +5,7 @@
 	com.vaadin.external.gentyref;version=latest,\
 	com.vaadin.flow.plugin.base;version=latest,\
 	com.vaadin.flow.server;version=latest,\
-	org.apache.commons.io;version=latest,\
+	org.apache.commons.commons-io;version=latest,\
 	org.apache.commons.commons-compress;version=latest,\
 	org.apache.httpcomponents.httpcore;version=latest,\
 	org.apache.httpcomponents.httpclient;version=latest,\
@@ -28,6 +28,7 @@ Bundle-Version: ${base-version}
 	@${repo;com.vaadin.flow.server;latest}
 	
 -privatepackage: \
+	org.gecko.vaadin.exporter,\
 	org.gecko.vaadin.generator,\
 	com.vaadin.flow.plugin.base,\
 	com.vaadin.flow.server.frontend,\
@@ -47,6 +48,7 @@ Bundle-Version: ${base-version}
 	com.google.common.base,\
 	com.google.common.collect,\
 	org.apache.commons.io,\
+	org.apache.commons.io.file,\
 	org.apache.commons.io.filefilter,\
 	org.apache.commons.io.output,\
 	com.google.common.primitives,\

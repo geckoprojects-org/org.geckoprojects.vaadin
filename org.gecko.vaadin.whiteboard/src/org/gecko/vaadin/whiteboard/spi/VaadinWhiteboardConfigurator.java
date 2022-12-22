@@ -1,12 +1,25 @@
+/**
+ * Copyright (c) 2012 - 2022 Data In Motion and others.
+ * All rights reserved. 
+ * 
+ * This program and the accompanying materials are made available under the terms of the 
+ * Eclipse Public License v2.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v20.html
+ * 
+ * Contributors:
+ *     Data In Motion - initial API and implementation
+ */
 package org.gecko.vaadin.whiteboard.spi;
 
 import static org.gecko.vaadin.whiteboard.Constants.CM_VAADIN_APPLICATION;
-import static org.gecko.vaadin.whiteboard.Constants.TARGET_FILTER_REFERENCE_COLLECTOR;
+import static org.gecko.vaadin.whiteboard.Constants.TARGET_FILTER_APPLICATION;
 import static org.gecko.vaadin.whiteboard.Constants.TARGET_FILTER_RESOURCE;
 import static org.gecko.vaadin.whiteboard.Constants.TARGET_NAME_FRONTEND_RESOURCE;
 import static org.gecko.vaadin.whiteboard.Constants.TARGET_NAME_REFERENCE_COLLECTOR;
+import static org.gecko.vaadin.whiteboard.Constants.TARGET_NAME_APPLICATION_PROCESSOR;
 import static org.gecko.vaadin.whiteboard.Constants.VAADIN_APPLICATION_CONTEXT;
 import static org.gecko.vaadin.whiteboard.Constants.VAADIN_APPLICATION_NAME;
+import static org.gecko.vaadin.whiteboard.Constants.VAADIN_PWA_NAME;
 import static org.gecko.vaadin.whiteboard.Constants.VAADIN_CAPABILITY_NAMESPACE;
 import static org.gecko.vaadin.whiteboard.Constants.VAADIN_CAPABILITY_WHITEBOARD;
 import static org.gecko.vaadin.whiteboard.Constants.VAADIN_COMPONENT_FILTER;
@@ -29,6 +42,7 @@ import org.osgi.namespace.implementation.ImplementationNamespace;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.cm.ConfigurationException;
+import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
@@ -56,9 +70,9 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 public class VaadinWhiteboardConfigurator {
 
 	private static final Logger logger = Logger.getLogger(VaadinWhiteboardConfigurator.class.getName());
-	private static final VaadinFrontend DEFAULT_FRONTEND = VaadinFrontend.NPM;
 	@Reference
 	private ConfigurationAdmin configAdmin;
+	private String pwaName;
 	private String applicationName;
 	private String contextPath;
 	private String httpWhiteboardTarget;
@@ -67,27 +81,31 @@ public class VaadinWhiteboardConfigurator {
 	private AtomicLong changeCount = new AtomicLong(0l);
 	private Configuration refCollectorConfig;
 	private Configuration whiteboardConfig;
+	private Configuration resourceConfig;
 	private Configuration contextConfig;
 	private Configuration initConfig;
 	private Configuration pushConfig;
 	
 	@ObjectClassDefinition
 	public @interface VaadinApplicationConfig {
+		String vaadin_pwa();
 		String vaadin_application_name();
 		String vaadin_application_description();
 		String vaadin_application_context() default "/*";
 		String vaadin_whiteboard_target() default "default";
-		VaadinFrontend vaadin_application_frontend() default VaadinFrontend.NPM;
+		VaadinFrontend vaadin_application_frontend() default VaadinFrontend.VITE;
 	}
 
 	@Activate
-	public void activate(VaadinApplicationConfig config, BundleContext context) throws ConfigurationException {
+	public void activate(VaadinApplicationConfig config, BundleContext context, ComponentContext ctx) throws ConfigurationException {
 		configure(config);
 		updateReferenceCollector();
-		// create servlet context for context path
-		updateContext();
+		// register resource provider under this whiteboard/servlet context
+		updateResource();
 		// register Flow Push resource under this whiteboard/servlet context
 		updatePush();
+		// create servlet context for context path
+		updateContext();
 		// register session and context listeners under that servlet context
 		updateInitialization();
 		// initialize the whiteboard 
@@ -101,8 +119,9 @@ public class VaadinWhiteboardConfigurator {
 		configure(config);
 		if (oldCount < changeCount.get()) {
 			updateReferenceCollector();
-			updateContext();
+			updateResource();
 			updatePush();
+			updateContext();
 			updateInitialization();
 			updateWhiteboard();
 			logger.info("Modified Vaadin setup for application " + applicationName);
@@ -117,6 +136,13 @@ public class VaadinWhiteboardConfigurator {
 				initConfig.delete();
 			} catch (IOException e) {
 				logger.log(Level.SEVERE, "Cannot remove whiteboard initializer for application: " + applicationName, e);
+			}
+		}
+		if (resourceConfig != null) {
+			try {
+				resourceConfig.delete();
+			} catch (IOException e) {
+				logger.log(Level.SEVERE, "Cannot remove whiteboard resource provider for application: " + applicationName, e);
 			}
 		}
 		if (pushConfig != null) {
@@ -159,6 +185,7 @@ public class VaadinWhiteboardConfigurator {
 			}
 		}
 		Dictionary<String, Object> properties = new Hashtable<String, Object>();
+		properties.put(VAADIN_PWA_NAME, pwaName);
 		properties.put(VAADIN_APPLICATION_NAME, applicationName);
 		properties.put(VAADIN_COMPONENT_FILTER, applicationFilter);
 		try {
@@ -178,13 +205,15 @@ public class VaadinWhiteboardConfigurator {
 			}
 		}
 		Dictionary<String, Object> properties = new Hashtable<String, Object>();
+		properties.put(VAADIN_PWA_NAME, pwaName);
 		properties.put(VAADIN_APPLICATION_NAME, applicationName);
 		properties.put(VAADIN_APPLICATION_CONTEXT, contextPath);
 		if (httpWhiteboardTarget != null) {
 			properties.put(VAADIN_WHITEBOARD_TARGET, httpWhiteboardTarget);
 		}
 		properties.put(TARGET_NAME_FRONTEND_RESOURCE, String.format(TARGET_FILTER_RESOURCE, frontend.getResourceFilter()));
-		properties.put(TARGET_NAME_REFERENCE_COLLECTOR, String.format(TARGET_FILTER_REFERENCE_COLLECTOR, applicationName));
+		properties.put(TARGET_NAME_REFERENCE_COLLECTOR, String.format(TARGET_FILTER_APPLICATION, applicationName));
+		properties.put(TARGET_NAME_APPLICATION_PROCESSOR, String.format(TARGET_FILTER_APPLICATION, applicationName));
 		try {
 			whiteboardConfig.updateIfDifferent(properties);
 		} catch (IOException e) {
@@ -202,6 +231,7 @@ public class VaadinWhiteboardConfigurator {
 			}
 		}
 		Dictionary<String, Object> properties = new Hashtable<String, Object>();
+		properties.put(VAADIN_PWA_NAME, pwaName);
 		properties.put(VAADIN_APPLICATION_NAME, applicationName);
 		properties.put(VAADIN_APPLICATION_CONTEXT, contextPath);
 		properties.put(HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME, applicationName);
@@ -214,16 +244,36 @@ public class VaadinWhiteboardConfigurator {
 		}
 	}
 	
+	private void updateResource() {
+		if (pushConfig == null) {
+			try {
+				resourceConfig = configAdmin.getFactoryConfiguration(Constants.CM_RESOURCE, applicationName, "?");
+			} catch (IOException e) {
+				logger.log(Level.SEVERE, "Cannot create whiteboard resource provider for application: " + applicationName, e);
+				return;
+			}
+		}
+		Dictionary<String, Object> properties = new Hashtable<String, Object>();
+		properties.put(VAADIN_PWA_NAME, pwaName);
+		properties.put(VAADIN_APPLICATION_NAME, applicationName);
+		try {
+			resourceConfig.updateIfDifferent(properties);
+		} catch (IOException e) {
+			logger.log(Level.SEVERE, "Cannot update whiteboards resource provider for application: " + applicationName, e);
+		}
+	}
+	
 	private void updatePush() {
 		if (pushConfig == null) {
 			try {
-				pushConfig = configAdmin.getFactoryConfiguration(Constants.CM_PUSH, applicationName, "?org.gecko.whiteboard");
+				pushConfig = configAdmin.getFactoryConfiguration(Constants.CM_PUSH, applicationName);
 			} catch (IOException e) {
 				logger.log(Level.SEVERE, "Cannot create whiteboard push resource for application: " + applicationName, e);
 				return;
 			}
 		}
 		Dictionary<String, Object> properties = new Hashtable<String, Object>();
+		properties.put(VAADIN_PWA_NAME, pwaName);
 		properties.put(VAADIN_APPLICATION_NAME, applicationName);
 		properties.put(VAADIN_APPLICATION_CONTEXT, contextPath);
 		properties.put(HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT, String.format("(%s=%s)", HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME, applicationName));
@@ -244,83 +294,28 @@ public class VaadinWhiteboardConfigurator {
 			}
 		}
 		Dictionary<String, Object> properties = new Hashtable<String, Object>();
+		properties.put(VAADIN_PWA_NAME, pwaName);
 		properties.put(VAADIN_APPLICATION_NAME, applicationName);
 		properties.put(VAADIN_APPLICATION_CONTEXT, contextPath);
 		properties.put(HttpWhiteboardConstants.HTTP_WHITEBOARD_LISTENER, true);
 		properties.put(HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT, String.format("(%s=%s)", HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME, applicationName));
-//		if (httpWhiteboardTarget != null) {
-//			properties.put(HttpWhiteboardConstants.HTTP_WHITEBOARD_TARGET, httpWhiteboardTarget);
-//		}
 		try {
 			initConfig.updateIfDifferent(properties);
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, "Cannot update whiteboards initializer for application: " + applicationName, e);
 		}
 	}
-	
-//	private void updateFrontend(VaadinApplicationConfig config, String oldTarget) {
-//		String target = config.vaadin_whiteboard_target();
-//		// nothing has changed
-//		if (target != null && target.equals(oldTarget) || target == null && oldTarget == null) {
-//			return;
-//		}
-//		// Check for changes and remove old target
-//		if (oldTarget != null) {
-//			removeFrontend(oldTarget);
-//		}
-//		FrontendConfig fc = frontendConfigurations.get(target);
-//		if (fc == null) {
-//			fc = new FrontendConfig();
-//			fc.usageCount = new AtomicInteger(1);
-//			fc.target = target;
-//			String configName = target.replace("(", "").replace(")", "").replace("=", "");
-//			try {
-//				fc.frontendConfig = configAdmin.getFactoryConfiguration(Constants.CM_FRONTEND, configName, "?");
-//				Dictionary<String, Object> properties = new Hashtable<String, Object>();
-//				if (!VAADIN_DEFAULT_HTTP_WHITEBOARD.equals(target)) {
-//					properties.put(HttpWhiteboardConstants.HTTP_WHITEBOARD_TARGET, target);
-//				}
-//				fc.frontendConfig.updateIfDifferent(properties);
-//			} catch (IOException e) {
-//				logger.log(Level.SEVERE, "Cannot create frontend configuration for config name: " + configName, e);
-//				return;
-//			}
-//			try {
-//				fc.clientConfig = configAdmin.getFactoryConfiguration(Constants.CM_CLIENT, configName, "?");
-//				Dictionary<String, Object> properties = new Hashtable<String, Object>();
-//				if (!target.equals("default")) {
-//					properties.put(HttpWhiteboardConstants.HTTP_WHITEBOARD_TARGET, target);
-//				}
-//				fc.clientConfig.updateIfDifferent(properties);
-//			} catch (IOException e) {
-//				logger.log(Level.SEVERE, "Cannot create client configuration for config name: " + configName, e);
-//				return;
-//			}
-//			try {
-//				fc.dataConfig = configAdmin.getFactoryConfiguration(Constants.CM_DATA, configName, "?");
-//				Dictionary<String, Object> properties = new Hashtable<String, Object>();
-//				if (!target.equals("default")) {
-//					properties.put(HttpWhiteboardConstants.HTTP_WHITEBOARD_TARGET, target);
-//				}
-//				fc.dataConfig.updateIfDifferent(properties);
-//			} catch (IOException e) {
-//				logger.log(Level.SEVERE, "Cannot create data configuration for config name: " + configName, e);
-//				return;
-//			}
-//			frontendConfigurations.put(fc.target, fc);
-//		} else {
-//			fc.usageCount.incrementAndGet();
-//		}
-//	}
 
 	private void configure(VaadinApplicationConfig config) throws ConfigurationException {
 		boolean changed = false;
 		String v = config.vaadin_application_name();
-		if (v == null) {
-			throw new ConfigurationException(VAADIN_APPLICATION_NAME, "An application name must be set");
-		} 
 		if (!v.equals(applicationName)) {
 			applicationName = v;
+			changed = true;
+		}
+		v = config.vaadin_pwa();
+		if (!v.equals(pwaName)) {
+			pwaName = v;
 			changed = true;
 		}
 		v = config.vaadin_application_context();
@@ -337,7 +332,6 @@ public class VaadinWhiteboardConfigurator {
 			changed = true;
 		}
 		VaadinFrontend f = config.vaadin_application_frontend();
-		f = f == null ? DEFAULT_FRONTEND : f;
 		if (!this.frontend.equals(f)) {
 			frontend = f;
 			changed = true;

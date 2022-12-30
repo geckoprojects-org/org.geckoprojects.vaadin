@@ -14,6 +14,28 @@ To build the project call `gradlew clean build`
 
 With that also the frontend components are build for the demo fragment.
 
+You can find the artifacts on Maven Central or/and the Snapshot Repositories:
+
+```
+<dependency>
+  <groupId>org.geckoprojects.vaadin</groupId>
+  <artifactId>org.gecko.vaadin.whiteboard</artifactId>
+  <version>2.0.0-SNAPSHOT</version>
+</dependency>
+<dependency>
+  <groupId>org.geckoprojects.vaadin</groupId>
+  <artifactId>org.gecko.vaadin.whiteboard.api</artifactId>
+  <version>2.0.0-SNAPSHOT</version>
+</dependency>
+<dependency>
+  <groupId>org.geckoprojects.vaadin</groupId>
+  <artifactId>org.gecko.vaadin.generator</artifactId>
+  <version>2.0.0-SNAPSHOT</version>
+</dependency>
+```
+
+
+
 ## The Demo Project
 
 There are two projects for the demo.

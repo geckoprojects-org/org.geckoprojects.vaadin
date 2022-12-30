@@ -14,8 +14,7 @@ package org.gecko.vaadin.whiteboard.servlet;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.List;
-import java.util.Objects;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,12 +26,10 @@ import org.gecko.vaadin.whiteboard.spi.WhiteboardApplicationProcessor;
 import com.vaadin.flow.di.Instantiator;
 import com.vaadin.flow.function.DeploymentConfiguration;
 import com.vaadin.flow.server.PwaRegistry;
-import com.vaadin.flow.server.RequestHandler;
 import com.vaadin.flow.server.RouteRegistry;
 import com.vaadin.flow.server.ServiceException;
 import com.vaadin.flow.server.VaadinServlet;
 import com.vaadin.flow.server.VaadinServletService;
-import com.vaadin.flow.server.communication.IndexHtmlRequestHandler;
 
 public class WhiteboardVaadinService extends VaadinServletService {
 
@@ -40,6 +37,7 @@ public class WhiteboardVaadinService extends VaadinServletService {
 	private static final Logger logger = Logger.getLogger(WhiteboardVaadinService.class.getName());
 	private final ServiceObjectRegistry<Object> serviceObjectRegistry;
 	private final ServiceObjectHolder holder;
+	private final AtomicReference<PwaRegistry> pwaRegistryRef = new AtomicReference<>();
 
 	public WhiteboardVaadinService(VaadinServlet servlet,
 			DeploymentConfiguration deploymentConfiguration, 
@@ -54,12 +52,19 @@ public class WhiteboardVaadinService extends VaadinServletService {
 	 */
 	@Override
 	protected PwaRegistry getPwaRegistry() {
+
 		if (holder.isPWA()) {
-			try {
-				PwaRegistry pwaRegistry = new PwaRegistry(holder.pwa, getServlet().getServletContext());
-				return pwaRegistry;
-			} catch (IOException e) {
-				logger.log(Level.SEVERE, "Error initializing PWA registry", e);
+			PwaRegistry registry = pwaRegistryRef.get();
+			if (registry != null) {
+				return registry;
+			} else {
+				try {
+					PwaRegistry pwaRegistry = new PwaRegistry(holder.pwa, getServlet().getServletContext());
+					pwaRegistryRef.set(pwaRegistry);
+					return pwaRegistry;
+				} catch (IOException e) {
+					logger.log(Level.SEVERE, "Error initializing PWA registry", e);
+				}
 			}
 		}
 		return super.getPwaRegistry();
@@ -79,13 +84,6 @@ public class WhiteboardVaadinService extends VaadinServletService {
 			return defaultInstantiator;
 		});
 	}
-	
-//	@Override
-//	protected List<RequestHandler> createRequestHandlers() throws ServiceException {
-//		List<RequestHandler> handlers = super.createRequestHandlers();
-//		RequestHandler htmlHandler = handlers.stream().filter(IndexHtmlRequestHandler.class::isInstance).findFirst().orElse(null);
-//		
-//	}
 
 	/**
 	 * By-passing the default mechanism and look also into our frontend provider, if no data was found using the ordinary way

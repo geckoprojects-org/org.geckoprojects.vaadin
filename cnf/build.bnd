@@ -9,7 +9,7 @@
 
 # Needed because we enabled library 'gecko-dimc' 	
 github-project: org.gecko.vaadin
-base-version: 1.0.0.SNAPSHOT
+base-version: 2.0.0.SNAPSHOT
 mvn-base-version: ${versionmask;===s;${base-version}}
 
 # Maven Central Group-Id
@@ -18,7 +18,7 @@ mvn-base-version: ${versionmask;===s;${base-version}}
 javac.source: 11
 javac.target: 11
 
--require-bnd "(version>=6.2.0)"
+-require-bnd "(version>=6.4.0)"
 
 -plugin.Central: \
     aQute.bnd.repository.maven.provider.MavenBndRepository; \

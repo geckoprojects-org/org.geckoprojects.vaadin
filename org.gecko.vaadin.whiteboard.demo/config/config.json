@@ -1,6 +1,6 @@
 {
   ":configurator:resource-version": 1,
-	"VaadinApplication~Vaadin2": 
+	"VaadinApplication~Vaadin": 
 	{
 		"vaadin.pwa": "Vaadin23",
 		"vaadin.application.description": "OSGi Vaadin23 Application",

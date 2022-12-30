@@ -25,7 +25,7 @@
 
 Bundle-Version: ${base-version}
 Bundle-Name: Vaadin Whiteboard
-Bundle-Description: Gecko.io Vaadin Whiteboard, see [developers Documentation](development.md) for further information
+Bundle-Description: Gecko.io Vaadin OSGi Whiteboard for Vaadin 23
 
 DynamicImport-Package: *
 	

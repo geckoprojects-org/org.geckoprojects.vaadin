@@ -9,4 +9,4 @@ Export-Package: \
 
 Bundle-Version: ${base-version}
 Bundle-Name: Vaadin Whiteboard API
-Bundle-Description: Gecko.io Vaadin Whiteboard API
+Bundle-Description: Gecko.io Vaadin Whiteboard API for Vaadin 23

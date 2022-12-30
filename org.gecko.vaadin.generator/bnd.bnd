@@ -115,3 +115,5 @@ Bundle-Version: ${base-version}
 	org.apache.http.params,\
 	org.apache.http.client.utils,\
 	org.apache.commons.compress.archivers.zip
+Bundle-Name: Vaadin Bnd Frontend Generator
+Bundle-Description: Gecko Vaadin 23 Frontend Generator for the Vaadin Whiteboard

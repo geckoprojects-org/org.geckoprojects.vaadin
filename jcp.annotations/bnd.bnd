@@ -9,3 +9,4 @@ Bundle-Name: Re-packaged JCIP Annotations
 Bundle-Vendor: Java Concurrency In Action
 
 Export-Package: net.jcip*
+Bundle-Description: Gecko Vaadin 23 re-packaged JCIP Annotation

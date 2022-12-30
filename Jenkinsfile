@@ -11,7 +11,7 @@ pipeline  {
     stages {
         stage('Main branch release') {
             when { 
-                branch 'main' 
+                branch 'vaadin23-main' 
             }
             steps {
                 echo "I am building on ${env.BRANCH_NAME}"
@@ -20,7 +20,7 @@ pipeline  {
         }
         stage('Snapshot branch release') {
             when { 
-                branch 'snapshot'
+                branch 'vaadin23'
             }
             steps  {
                 echo "I am building on ${env.JOB_NAME}"

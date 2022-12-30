@@ -82,9 +82,9 @@ public class MainView extends AppLayout {
 //        HorizontalLayout logoLayout = new HorizontalLayout();
         logoLayout.setId("logo");
         logoLayout.setAlignItems(FlexComponent.Alignment.CENTER);
-        logoLayout.add(new Image("images/Logo_DIMC.png", "DIMC logo"));
+        logoLayout.add(new Image("images/CI_CIM.png", "DIMC logo"));
 //        logoLayout.add(new Image("images/logo.png", "My App logo"));
-        logoLayout.add(new H1("Vaadin Demo"));
+        logoLayout.add(new H1("Vaadin 23 Demo"));
         layout.add(logoLayout, menu);
         return layout;
     }

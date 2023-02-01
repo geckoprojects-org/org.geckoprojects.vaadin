@@ -19,12 +19,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import com.vaadin.flow.plugin.base.BuildFrontendUtil;
@@ -273,24 +273,28 @@ public class VaadinNPMGenerator implements Generator<GeneratorOptions>, PluginAd
 	 */
 	@Override
 	public Set<File> getJarFiles() {
-		Collection<Container> buildpath;
-		try {
-			//			buildpath = context.getProject().getBuildpath();
-			String bsn = context.getProject().getName();
-			Set<String> filterSet = new HashSet<String>();
-			filterSet.add(bsn + ".jar");
-			filterSet.add("org.gecko.vaadin.whiteboard.push.jar");
-			filterSet.add("org.gecko.vaadin.whiteboard.api.jar");
-			filterSet.add("org.gecko.vaadin.whiteboard.jar");
-			buildpath = context.getProject().getRunbundles();
-			return buildpath.stream()
-					.filter(c->!filterSet.contains(c.getBundleSymbolicName()))
+		Collection<Container> runBundles;
+		try {		
+			runBundles = context.getProject().getRunbundles();
+			return runBundles.stream()
+					.filter(createJarFilter())
+					.peek(c -> logger.info(c.getBundleSymbolicName()))
 					.map(Container::getFile)
 					.collect(Collectors.toSet());
 		} catch (Exception e) {
 			logError("Cannot get JAR files, returning empty set", e);
 			return Collections.emptySet();
 		}
+	}
+	
+	private Predicate<Container> createJarFilter() {
+		String bsn = context.getProject().getName();
+		String projPrefix = bsn.substring(0, bsn.indexOf(".vaadin")); //de.jena.mdo
+		String vaadinWhiteboardPrefix = "org.gecko.vaadin.whiteboard";
+		String vaadinProj = projPrefix + ".vaadin"; //de.jena.mdo.vaadin
+		return c -> 
+			(!c.getBundleSymbolicName().startsWith(projPrefix) && !c.getBundleSymbolicName().startsWith(vaadinWhiteboardPrefix))
+			|| vaadinProj.equals(c.getBundleSymbolicName());		
 	}
 
 	/**

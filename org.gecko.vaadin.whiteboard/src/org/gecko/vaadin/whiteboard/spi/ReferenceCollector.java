@@ -106,13 +106,22 @@ public class ReferenceCollector implements ServiceTrackerCustomizer<Object, Obje
 			pushStream = provider.buildStream(source).withScheduler(Executors.newScheduledThreadPool(1)).build();
 			pushStream = pushStream.buffer().distinct();
 
-			final Duration batchDuration = Duration.ofMillis(500);
+			final Duration batchDuration = Duration.ofMillis(5);
 			pushStream.window(batchDuration, sec -> sec).onError(e -> logger.log(Level.SEVERE, "Error adding new Vaadin component", e)).forEach(sec -> {
 				sec.stream().filter(sre -> sre.isComponent()).forEach(sre -> {
 					handleComponentReferences(dispatcher, sre);
 				});
 				dispatcher.batchDispatch();
 			});
+//			pushStream.onError(e -> logger.log(Level.SEVERE, "Error adding new Vaadin component", e))
+//			.filter(sre -> sre.isComponent()).forEach(sre -> {
+//				System.out.println("Calling handleComponentReference");
+//				handleComponentReferences(dispatcher, sre);
+//				dispatcher.batchDispatch();
+//			});
+			
+
+			
 		}
 
 	}

@@ -159,7 +159,7 @@ public class WhiteboardServiceInitializer implements ServletContextListener, Vaa
 		}
 		String pwaName = (String) ctx.getProperties().get(Constants.VAADIN_PWA_NAME);
 		if (pwaName != null) {
-			props.put(Constants.VAADIN_APPLICATION_NAME, pwaName);
+			props.put(Constants.VAADIN_PWA_NAME, pwaName);
 		}
 		return props;
 	}

@@ -12,6 +12,10 @@ github-project: org.gecko.vaadin
 base-version: 2.0.0.SNAPSHOT
 mvn-base-version: ${versionmask;===s;${base-version}}
 
+gecko-vaadin-version: 2.0.0-SNAPSHOT
+vaadin-version: 23.3.0
+asm-version: 9.4
+
 # Maven Central Group-Id
 -groupid: org.geckoprojects.vaadin
 

@@ -1,0 +1,7 @@
+/bin/
+/bin_test/
+/generated/
+/package-lock.json
+/npm-generate.log
+/META-INF/
+/pnpmfile.cjs

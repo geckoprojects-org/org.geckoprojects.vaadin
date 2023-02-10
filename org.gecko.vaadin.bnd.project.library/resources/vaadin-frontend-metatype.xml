@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metatype:MetaData xmlns:metatype="http://www.osgi.org/xmlns/metatype/v1.2.0" localization="OSGI-INF/l10n/org.gecko.bndtools.templates.emf.model">
+  <OCD id="org.gecko.vaadin-frontend.project" name="Gecko Vaadin Frontend Project Template" description="Gecko Vaadin Frontend Project Template">
+    <AD id="vaadinBundle" type="String" name="Vaadin Bundle" description="The bundle where the Vaadin views are located." default="vaadin.bundle"/>
+  </OCD>
+</metatype:MetaData>

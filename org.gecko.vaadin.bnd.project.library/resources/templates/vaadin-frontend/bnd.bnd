@@ -1,0 +1,23 @@
+Fragment-Host: {{vaadinBundle}}
+Bundle-Version: 1.0.0.SNAPSHOT
+
+-privatepackage: {{basePackageName}}
+
+-includeresource: \
+	META-INF/VAADIN=META-INF/VAADIN
+	
+-dependson: \
+	{{vaadinBundle}}
+
+-generate:\
+	test.txt;\
+	generate=geckoVaadinNPM;\
+	output=META-INF/VAADIN;\
+	cleanup=ALL
+
+-runfw: org.apache.felix.framework;version='[7.0.5,7.0.5]'
+-runee: JavaSE-11
+-runrequires: \
+	bnd.identity;id='org.gecko.vaadin.whiteboard.api',\
+	bnd.identity;id='org.gecko.vaadin.whiteboard',\
+	bnd.identity;id='{{vaadinBundle}}'

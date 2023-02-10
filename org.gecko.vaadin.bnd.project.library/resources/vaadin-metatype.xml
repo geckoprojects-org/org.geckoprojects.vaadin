@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metatype:MetaData xmlns:metatype="http://www.osgi.org/xmlns/metatype/v1.2.0" localization="OSGI-INF/l10n/org.gecko.bndtools.templates.emf.model">
+  <OCD id="org.gecko.vaadin.project" name="Gecko Vaadin Project Template" description="Gecko Vaadin Project Template">
+    <AD id="host" type="String" name="Vaadin Server Host" description="The hostname where the Vaadin Whiteboard will run." default="localhost"/>
+    <AD id="port" type="String" name="Vaadin Server Port" description="The port the Vaadin Whiteboard will run" default="8086"/>
+    <AD id="applicationName" type="String" name="Vaadin Whiteboard Name" description="The name of the Vaadin whiteboard" default="Demo"/>
+    <AD id="contextPath" type="String" name="Contextpath" description="The root context the Vaadin Whiteboard will be available under" default="vaadin"/>
+  </OCD>
+</metatype:MetaData>

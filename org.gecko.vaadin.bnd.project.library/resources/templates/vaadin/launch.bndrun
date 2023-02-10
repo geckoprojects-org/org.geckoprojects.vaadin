@@ -1,0 +1,37 @@
+-runfw: org.apache.felix.framework;version='[7.0.5,7.0.5]'
+-runee: JavaSE-17
+
+-runsystemcapabilities: ${native_capability}
+
+-resolve.effective: active;skip:="osgi.service"
+
+-runtrace: true
+
+-runrequires: \
+	bnd.identity;id='slf4j.simple';version:Version='1.7.25',\
+	bnd.identity;id='org.apache.felix.http.jetty';version:Version='4.1.2',\
+	bnd.identity;id='com.vaadin.flow.client',\
+	bnd.identity;id='com.vaadin.flow.html.components',\
+	bnd.identity;id='com.vaadin.external.atmosphere.runtime',\
+	bnd.identity;id='{{projectName}}',\
+	bnd.identity;id='{{projectName}}.frontend',\
+	bnd.identity;id='org.apache.aries.spifly.dynamic.framework.extension',\
+	bnd.identity;id='org.apache.felix.gogo.command',\
+	bnd.identity;id='org.apache.felix.gogo.shell',\
+	bnd.identity;id='org.apache.felix.http.whiteboard',\
+	bnd.identity;id='org.apache.felix.configadmin'
+
+# we need to run our project
+-runbundles: \
+	{{projectName}};version=snapshot
+
+-runblacklist: \
+	bnd.identity;id='org.osgi.service.http.whiteboard',\
+	bnd.identity;id='slf4j.simple';version:Version='1.7.30',\
+	bnd.identity;id='org.gecko.emf.osgi.component';version='[4.0.0,4.1)',\
+	
+-runproperties: \
+	osgi.console=,\
+	org.osgi.service.http.port={{port}},\
+	org.osgi.service.http.host={{host}},\
+	osgi.console.enable.builtin=false

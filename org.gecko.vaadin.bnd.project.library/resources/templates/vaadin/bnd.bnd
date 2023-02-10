@@ -1,0 +1,17 @@
+-library: \
+	enableVaadin,\
+	enable-emf
+
+Bundle-Version: 1.0.0.SNAPSHOT
+Export-Package: \
+	{{basePackageName}},\
+	{{basePackageName}}.views.main,\
+	{{basePackageName}}.views.helloworld,\
+	{{basePackageName}}.service
+
+-includeresource: \
+	OSGI-INF/configurator/=configs/,\
+	META-INF/resources=resources,\
+	META-INF/resources=frontend,\
+	META-INF/frontend=frontend
+Require-Capability: osgi.extender;filter:='(osgi.extender=osgi.configurator)'

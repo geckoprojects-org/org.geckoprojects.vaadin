@@ -32,6 +32,8 @@ import org.osgi.service.component.annotations.ConfigurationPolicy;
 import com.vaadin.flow.di.ResourceProvider;
 
 /**
+ * This is the FrontendResourceProvider for Vaadin. The value of the pwa attribute has to match the value of the configuration property vaadin.pwa
+ * in the configuration file.
  * 
  * @author ilenia
  * @since Feb 7, 2023

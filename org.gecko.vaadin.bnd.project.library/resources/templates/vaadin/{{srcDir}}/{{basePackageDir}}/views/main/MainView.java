@@ -37,6 +37,8 @@ import com.vaadin.flow.router.RouterLink;
 import {{basePackageName}}.views.helloworld.HelloWorldView;
 
 /**
+ * This is the MainView of your Vaadin application. 
+ * You can add other views in the createMenuItems method, that will be displayed in the Menu tabs.
  * 
  * @author ilenia
  * @since Feb 7, 2023

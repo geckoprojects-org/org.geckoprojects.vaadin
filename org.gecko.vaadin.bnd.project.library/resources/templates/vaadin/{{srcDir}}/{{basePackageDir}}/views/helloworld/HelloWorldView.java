@@ -28,6 +28,14 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteAlias;
 
+/**
+ * This is one example view for your application.
+ * With the {@link Route} annotation you specify the last segment of the path under which this view will be reachable. 
+ * You can add other views in the createMenuItems method, that will be displayed in the Menu tabs.
+ * 
+ * @author ilenia
+ * @since Feb 7, 2023
+ */
 @Route(value = "hello", layout = MainView.class)
 @RouteAlias(value = "", layout = MainView.class)
 @PageTitle("Hello World")

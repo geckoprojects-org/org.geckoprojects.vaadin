@@ -1,0 +1,15 @@
+lib.version: 2.0.0
+
+-buildpath: \
+	dev.hilla:endpoint;version='${lib.version}',\
+	com.github.javaparser:java-symbol-solver-core,\
+	com.github.javaparser:java-symbol-solver-logic,\
+	com.github.javaparser:java-symbol-solver-model
+	
+Bundle-Version: ${lib.version}
+Bundle-Localization: bundle
+Bundle-Name: Re-packaged dev.hilla JAR
+Bundle-Vendor: Vaadin
+
+Export-Package: *
+Bundle-Description: re-packaged of dev.hilla 

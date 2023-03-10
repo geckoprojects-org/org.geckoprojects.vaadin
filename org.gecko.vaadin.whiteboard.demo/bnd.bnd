@@ -14,7 +14,6 @@ Require-Capability: osgi.extender;filter:='(osgi.extender=osgi.configurator)'
 	com.vaadin.flow.component.shared;version=latest,\
 	com.vaadin.flow.component.button;version=latest,\
 	com.vaadin.flow.component.orderedlayout;version=latest,\
-	com.vaadin.flow.component.notification;version=latest,\
 	com.vaadin.flow.component.textfield;version=latest,\
 	com.vaadin.flow.component.applayout;version=latest,\
 	com.vaadin.flow.component.tabs;version=latest,\

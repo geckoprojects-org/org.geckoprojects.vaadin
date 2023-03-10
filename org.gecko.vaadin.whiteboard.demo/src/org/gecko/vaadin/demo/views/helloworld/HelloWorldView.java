@@ -20,7 +20,6 @@ import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
@@ -49,7 +48,8 @@ public class HelloWorldView extends HorizontalLayout {
         setVerticalComponentAlignment(Alignment.END, name, sayHello);
         sayHello.addClickListener(e -> {
         	String greet = service.greet(name.getValue());
-            Notification.show(greet);
+//        	They are importing a private package com.vaadin.flow.component.shared.internal
+//            Notification.show(greet);
         });
     }
 

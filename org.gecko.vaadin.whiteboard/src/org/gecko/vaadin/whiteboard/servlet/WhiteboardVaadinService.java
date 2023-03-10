@@ -80,7 +80,7 @@ public class WhiteboardVaadinService extends VaadinServletService {
 		return loadInstantiators().orElseGet(() -> {
 			OSGiServiceInstantiator defaultInstantiator = new OSGiServiceInstantiator(
 					this, serviceObjectRegistry);
-			defaultInstantiator.init(this);
+//			defaultInstantiator. init(this);
 			return defaultInstantiator;
 		});
 	}

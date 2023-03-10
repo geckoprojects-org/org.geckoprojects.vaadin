@@ -13,8 +13,8 @@ package org.gecko.vaadin.whiteboard.push;
 
 import org.gecko.vaadin.whiteboard.Constants;
 import org.osgi.service.component.annotations.*;
-import org.osgi.service.http.context.ServletContextHelper;
-import org.osgi.service.http.whiteboard.propertytypes.HttpWhiteboardResource;
+import org.osgi.service.servlet.context.ServletContextHelper;
+import org.osgi.service.servlet.whiteboard.propertytypes.HttpWhiteboardResource;
 
 /**
  * Configurable {@link HttpWhiteboardResource}.

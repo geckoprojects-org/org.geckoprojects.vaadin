@@ -1,6 +1,5 @@
 -buildpath: \
 	biz.aQute.bndlib,\
-	com.vaadin.external.atmosphere.runtime;version=latest,\
 	com.vaadin.external.gwt;version=latest,\
 	com.vaadin.external.gentyref;version=latest,\
 	com.vaadin.flow.plugin.base;version=latest,\

@@ -20,10 +20,10 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.servlet.ServletContext;
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
-import javax.servlet.ServletException;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletContextEvent;
+import jakarta.servlet.ServletContextListener;
+import jakarta.servlet.ServletException;
 
 import org.gecko.vaadin.whiteboard.Constants;
 import org.gecko.vaadin.whiteboard.di.WhiteboardLookup;
@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
+import org.osgi.service.servlet.whiteboard.HttpWhiteboardConstants;
 
 import com.vaadin.flow.di.Lookup;
 import com.vaadin.flow.server.ServiceInitEvent;

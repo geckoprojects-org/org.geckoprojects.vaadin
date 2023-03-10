@@ -28,7 +28,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.servlet.Servlet;
+import jakarta.servlet.Servlet;
 
 import org.gecko.vaadin.whiteboard.registry.ServiceObjectRegistry;
 import org.gecko.vaadin.whiteboard.servlet.WhiteboardVaadinServlet;
@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
+import org.osgi.service.servlet.whiteboard.HttpWhiteboardConstants;
 
 import com.vaadin.flow.router.HasErrorParameter;
 import com.vaadin.flow.router.InternalServerError;

@@ -13,8 +13,8 @@ package org.gecko.vaadin.whiteboard.servlet;
 
 import java.net.URL;
 
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
+import jakarta.servlet.ServletConfig;
+import jakarta.servlet.ServletException;
 
 import org.gecko.vaadin.whiteboard.registry.ServiceObjectRegistry;
 import org.gecko.vaadin.whiteboard.registry.ServiceObjectRegistry.ServiceObjectHolder;

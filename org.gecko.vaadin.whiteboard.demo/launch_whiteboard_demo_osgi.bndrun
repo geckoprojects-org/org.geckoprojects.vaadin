@@ -69,17 +69,14 @@
 	org.apache.sling.commons.johnzon;version='[1.2.14,1.2.15)'
 
 -runrequires: \
-	bnd.identity;id='slf4j.simple';version:Version='1.7.25',\
 	bnd.identity;id='org.apache.felix.http.jetty';version:Version='4.1.2',\
 	bnd.identity;id='com.vaadin.flow.client',\
 	bnd.identity;id='com.vaadin.flow.html.components',\
-	bnd.identity;id='com.vaadin.external.atmosphere.runtime',\
 	bnd.identity;id='org.gecko.vaadin.whiteboard.demo',\
 	bnd.identity;id='org.gecko.vaadin.whiteboard.demo.frontend',\
 	bnd.identity;id='org.apache.aries.spifly.dynamic.framework.extension',\
 	bnd.identity;id='org.apache.felix.gogo.command',\
-	bnd.identity;id='org.apache.felix.gogo.shell',\
-	bnd.identity;id='org.apache.felix.http.whiteboard'
--runee: JavaSE-11
+	bnd.identity;id='org.apache.felix.gogo.shell'
+-runee: JavaSE-17
 #-runvm: -Dorg.eclipse.emf.ecore.EPackage.Registry.INSTANCE=org.eclipse.emf.ecore.impl.org.eclipse.emf.ecore.impl
 -runblacklist: bnd.identity;id='org.osgi.service.http.whiteboard'

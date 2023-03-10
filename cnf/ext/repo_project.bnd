@@ -1,0 +1,29 @@
+-plugin.Central: \
+    aQute.bnd.repository.maven.provider.MavenBndRepository; \
+        snapshotUrl="https://oss.sonatype.org/content/repositories/snapshots/,https://devel.data-in-motion.biz/nexus/repository/dim-snapshot/"; \
+        releaseUrl=https://repo.maven.apache.org/maven2/; \
+        index=${.}/central.maven; \
+        readOnly=true; \
+        poll.time=-1; \
+        name="Central"
+
+-plugin.Local: \
+	aQute.bnd.deployer.repository.LocalIndexedRepo; \
+		name = Local; \
+		pretty = true; \
+		local = ${build}/local
+
+-plugin.Temp: \
+	aQute.bnd.deployer.repository.LocalIndexedRepo; \
+		name = Temp; \
+		pretty = true; \
+		local = ${build}/cache/temp
+
+-plugin.Vaadin24: \
+    aQute.bnd.repository.maven.provider.MavenBndRepository; \
+        snapshotUrl="https://oss.sonatype.org/content/repositories/snapshots/"; \
+        releaseUrl=https://repo.maven.apache.org/maven2/; \
+        index=${.}/vaadin24.maven; \
+        readOnly=true; \
+        poll.time=-1; \
+        name="Vaadin24"

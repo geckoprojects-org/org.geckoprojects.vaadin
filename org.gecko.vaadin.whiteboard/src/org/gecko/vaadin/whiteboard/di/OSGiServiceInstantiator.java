@@ -29,7 +29,7 @@ import com.vaadin.flow.server.VaadinSession;
  * OSGi instantiator, that creates instances out of {@link ServiceObjects}.
  * It registers a {@link SessionDestroyListener} to the {@link VaadinService} to get
  * notified, when to release the service instances.
- * The instance are stored in the {@link VaadinSession}, an released as soon as 
+ * The instance are stored in the {@link VaadinSession}, and released as soon as 
  * there is an getOrCreate request, with an already existing service instance.
  * @author Mark Hoffmann
  *
@@ -42,6 +42,10 @@ public class OSGiServiceInstantiator extends DefaultInstantiator implements Sess
 	private static final String INSTANCE_CLASS = "vaadin.osgi.object.%s";
 	private final ServiceObjectRegistry<Object> serviceObjectRegistry;
 
+	public OSGiServiceInstantiator(VaadinService service) {
+		this(service, null);
+	}
+	
 	public OSGiServiceInstantiator(VaadinService service, ServiceObjectRegistry<Object> serviceObjectRegistry) {
 		super(service);
 		service.addSessionDestroyListener(this);
@@ -96,6 +100,7 @@ public class OSGiServiceInstantiator extends DefaultInstantiator implements Sess
 		logger.info("Released service object " + instances.size() + " instances for session " + session);
 		instances.clear();
 	}
+	
 	
 	/**
 	 * Check the session for old service objects instances and release them, if they exist.

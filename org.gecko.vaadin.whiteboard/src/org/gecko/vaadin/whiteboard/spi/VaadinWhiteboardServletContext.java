@@ -20,7 +20,7 @@ import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
-import org.osgi.service.http.context.ServletContextHelper;
+import org.osgi.service.servlet.context.ServletContextHelper;
 
 /**
  * Configurable {@link ServletContextHelper} that is registered under the corresponding context root from the Vaadin

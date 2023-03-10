@@ -38,7 +38,7 @@ Bundle-Version: ${base-version}
 	cleanup=ALL
 
 -runfw: org.apache.felix.framework;version='[7.0.5,7.0.5]'
--runee: JavaSE-11
+-runee: JavaSE-17
 -runrequires: \
 	bnd.identity;id='org.gecko.vaadin.whiteboard.api',\
 	bnd.identity;id='org.gecko.vaadin.whiteboard.demo'

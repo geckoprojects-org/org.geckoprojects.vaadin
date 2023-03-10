@@ -49,8 +49,8 @@ import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
-import org.osgi.service.http.whiteboard.annotations.RequireHttpWhiteboard;
+import org.osgi.service.servlet.whiteboard.HttpWhiteboardConstants;
+import org.osgi.service.servlet.whiteboard.annotations.RequireHttpWhiteboard;
 import org.osgi.service.metatype.annotations.Designate;
 import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 

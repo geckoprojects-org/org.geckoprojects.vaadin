@@ -7,7 +7,6 @@
 	org.osgi.util.function;version=latest,\
 	org.osgi.util.promise;version=latest,\
 	org.osgi.service.cm;version=latest,\
-	org.osgi.service.http.whiteboard;version=latest,\
 	org.osgi.service.component;version=latest,\
 	biz.aQute.bnd.annotation;version=latest,\
 	slf4j.api;version=latest,\
@@ -19,7 +18,8 @@
 	com.vaadin.flow.html.components;version=latest,\
 	com.vaadin.flow.client;version=latest,\
 	com.vaadin.flow.component.button;version=latest,\
-	org.gecko.vaadin.whiteboard.api;version=snapshot
+	org.gecko.vaadin.whiteboard.api;version=snapshot,\
+	org.osgi.service.servlet
 	
 -baseline: *
 

@@ -218,28 +218,7 @@ public class VaadinNPMGenerator implements Generator<GeneratorOptions>, PluginAd
 	public boolean runNpmInstall() {
 		return true;
 	}
-//
-//    /**
-//     * Copy the `webpack.generated.js` from the specified URL. Default is the
-//     * template provided by this plugin. Set it to empty string to disable the
-//     * feature.
-//     * @Parameter(defaultValue = FrontendUtils.WEBPACK_GENERATED)
-//     */
-//	@Override
-//	public String webpackGeneratedTemplate() {
-//		return FrontendUtils.WEBPACK_GENERATED;
-//	}
-//
-//	/**
-//	 * Copy the `webpack.generated.js` from the specified URL. Default is the
-//	 * template provided by this plugin. Set it to empty string to disable the
-//	 * feature.
-//	 * @Parameter(defaultValue = FrontendUtils.WEBPACK_GENERATED)
-//	 */
-//	@Override
-//	public String webpackTemplate() {
-//		return FrontendUtils.WEBPACK_CONFIG;
-//	}
+
 
 	/**
      * Application properties file in Spring project.
@@ -277,7 +256,6 @@ public class VaadinNPMGenerator implements Generator<GeneratorOptions>, PluginAd
 	@Override
 	public File generatedFolder() {
 		return projectBaseDirectory().resolve(buildFolder() + "/").resolve(com.vaadin.flow.server.frontend.FrontendUtils.FRONTEND).toFile();
-//		return projectBaseDirectory().resolve("generated/" + com.vaadin.flow.server.frontend.FrontendUtils.FRONTEND).toFile();
 	}
 
 	/**
@@ -373,15 +351,7 @@ public class VaadinNPMGenerator implements Generator<GeneratorOptions>, PluginAd
 		return true;
 	}
 
-    /**
-     * Whether or not we are running in legacy V14 bootstrap mode. 'True' if
-     * defined or if it's set to true otherwise <code>null</code>.
-     * @Parameter(defaultValue = "${vaadin.useDeprecatedV14Bootstrapping}")
-     */
-	@Override
-	public String getUseDeprecatedV14Bootstrapping() {
-		return null;
-	}
+
 
     /**
      * Checks the debug Mode.
@@ -517,14 +487,6 @@ public class VaadinNPMGenerator implements Generator<GeneratorOptions>, PluginAd
 		return false;
 	}
 
-    /**
-     * Whether or not we are running in productionMode.
-     * @Parameter(defaultValue = "${vaadin.productionMode}")
-     */
-	@Override
-	public boolean productionMode() {
-		return true;
-	}
 
     /**
      * The folder where `package.json` file is located. Default is project root
@@ -567,9 +529,6 @@ public class VaadinNPMGenerator implements Generator<GeneratorOptions>, PluginAd
      */
 	@Override
 	public File webpackOutputDirectory() {
-
-		//		return projectBaseDirectory().resolve("generated")
-		//				.resolve(com.vaadin.flow.server.Constants.VAADIN_WEBAPP_RESOURCES).toFile();
 		return projectBaseDirectory().resolve(com.vaadin.flow.server.Constants.VAADIN_WEBAPP_RESOURCES).toFile();
 	}
 
@@ -602,6 +561,15 @@ public class VaadinNPMGenerator implements Generator<GeneratorOptions>, PluginAd
 		return Collections.emptyList();
 	}
 	
+	/* 
+	 * (non-Javadoc)
+	 * @see com.vaadin.flow.plugin.base.PluginAdapterBase#isFrontendHotdeploy()
+	 */
+	@Override
+	public boolean isFrontendHotdeploy() {
+		return false;
+	}
+	
     private static FrontendToolsSettings getFrontendToolsSettings(
             PluginAdapterBase adapter) throws URISyntaxException {
         FrontendToolsSettings settings = new FrontendToolsSettings(
@@ -615,5 +583,7 @@ public class VaadinNPMGenerator implements Generator<GeneratorOptions>, PluginAd
 
         return settings;
     }
+
+	
 
 }

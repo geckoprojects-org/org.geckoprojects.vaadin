@@ -11,5 +11,11 @@ Bundle-Localization: bundle
 Bundle-Name: Re-packaged dev.hilla JAR
 Bundle-Vendor: Vaadin
 
-Export-Package: *
 Bundle-Description: re-packaged of dev.hilla 
+Export-Package: dev.hilla
+Import-Package: \
+	com.github.*;'resolution:'=optional,\
+	dev.hilla.*;'resolution:'=optional,\
+	reactor.*;'resolution:'=optional,\
+	org.springframework.*;'resolution:'=optional,\
+	*

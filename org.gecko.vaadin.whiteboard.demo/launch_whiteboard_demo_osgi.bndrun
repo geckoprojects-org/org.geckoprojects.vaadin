@@ -76,7 +76,8 @@
 	bnd.identity;id='org.gecko.vaadin.whiteboard.demo.frontend',\
 	bnd.identity;id='org.apache.aries.spifly.dynamic.framework.extension',\
 	bnd.identity;id='org.apache.felix.gogo.command',\
-	bnd.identity;id='org.apache.felix.gogo.shell'
+	bnd.identity;id='org.apache.felix.gogo.shell',\
+	bnd.identity;id='org.gecko.vaadin.flow.component.fragment'
 -runee: JavaSE-17
 #-runvm: -Dorg.eclipse.emf.ecore.EPackage.Registry.INSTANCE=org.eclipse.emf.ecore.impl.org.eclipse.emf.ecore.impl
 -runblacklist: bnd.identity;id='org.osgi.service.http.whiteboard'

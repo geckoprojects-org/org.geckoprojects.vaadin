@@ -1,0 +1,3 @@
+Export-Package: com.vaadin.flow.component.shared.internal
+Fragment-Host: com.vaadin.flow.component.shared;bundle-version=24.0.0
+-buildpath: com.vaadin.flow.component.shared

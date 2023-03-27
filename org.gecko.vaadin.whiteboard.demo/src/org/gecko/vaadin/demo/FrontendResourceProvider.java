@@ -13,14 +13,11 @@ package org.gecko.vaadin.demo;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.gecko.vaadin.whiteboard.Constants;
 import org.osgi.annotation.bundle.Capability;
@@ -41,7 +38,6 @@ import com.vaadin.flow.di.ResourceProvider;
 @Component(service = ResourceProvider.class, immediate = true, configurationPolicy = ConfigurationPolicy.REQUIRE, name = Constants.CM_RESOURCE)
 public class FrontendResourceProvider implements ResourceProvider {
 
-	private static final Logger logger = Logger.getLogger(FrontendResourceProvider.class.getName());
 	private BundleContext context;
 
 	@Activate
@@ -76,14 +72,4 @@ public class FrontendResourceProvider implements ResourceProvider {
 	public InputStream getClientResourceAsStream(String path) throws IOException {
 		return getClientResource(path).openStream();
 	}
-	
-	private URL toURL(String stringUrl) {
-		try {
-			return new URL(stringUrl);
-		} catch (MalformedURLException e) {
-			logger.log(Level.SEVERE, e, ()->"Cannot convert to URI '" + stringUrl + "'");
-		}
-		return null;
-	}
-
 }

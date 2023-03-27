@@ -3,6 +3,10 @@
 org.geckoprojects.bnd:org.gecko.bnd.dimc.library:1.2.0
 org.geckoprojects.bnd:org.gecko.bnd.osgitest.library:1.2.0
 org.geckoprojects.bnd:org.gecko.bnd.jacoco.library:1.2.0
+org.geckoprojects.emf:org.gecko.emf.osgi.bnd.library.workspace:4.5.0
+org.geckoprojects.emf:org.gecko.emf.osgi.extender:4.5.0
+org.geckoprojects.emf:org.gecko.emf.osgi.example.model.basic:4.5.0
+org.gecko.runtime:org.gecko.templates:1.0.31
 
 # OSGi API
 org.osgi:org.osgi.annotation.bundle:1.1.0

@@ -60,8 +60,6 @@ Bundle-Version: ${base-version}
 	org.jsoup;version='[1.15.3,1.15.4)',\
 	org.osgi.service.cm;version='[1.6.0,1.6.1)',\
 	org.osgi.service.component;version='[1.5.0,1.5.1)',\
-	org.osgi.service.http.whiteboard;version='[1.1.0,1.1.1)',\
-	org.osgi.util.converter;version='[1.0.1,1.0.2)',\
 	org.osgi.util.promise;version='[1.2.0,1.2.1)',\
 	org.osgi.util.pushstream;version='[1.0.2,1.0.3)',\
 	slf4j.api;version='[1.7.36,1.7.37)',\
@@ -96,5 +94,18 @@ Bundle-Version: ${base-version}
 	jakarta.validation.jakarta.validation-api;version='[2.0.2,2.0.3)',\
 	jcp.annotations;version=snapshot,\
 	org.apache.commons.commons-io;version='[2.11.0,2.11.1)',\
-	com.vaadin.flow.data.renderer;version='[23.3.0,23.3.1)'
+	com.vaadin.flow.data.renderer;version='[23.3.0,23.3.1)',\
+	com.vaadin.flow.component.combobox;version='[23.3.0,23.3.1)',\
+	com.vaadin.flow.component.customfield;version='[23.3.0,23.3.1)',\
+	com.vaadin.flow.component.datepicker;version='[23.3.0,23.3.1)',\
+	com.vaadin.flow.component.formlayout;version='[23.3.0,23.3.1)',\
+	org.apache.felix.configadmin;version='[1.9.26,1.9.27)',\
+	org.eclipse.emf.common;version='[2.23.0,2.23.1)',\
+	org.eclipse.emf.ecore;version='[2.25.0,2.25.1)',\
+	org.eclipse.emf.ecore.xmi;version='[2.16.0,2.16.1)',\
+	org.gecko.emf.osgi.api;version='[4.5.0,4.5.1)',\
+	org.gecko.emf.osgi.component;version='[4.5.0,4.5.1)',\
+	org.gecko.emf.osgi.example.model.basic;version='[4.5.0,4.5.1)',\
+	org.gecko.vaadin.emf.databinding;version=snapshot,\
+	org.osgi.util.converter;version='[1.0.8,1.0.9)'
 -privatepackage: org.gecko.vaadin.whiteboard.demo.frontend

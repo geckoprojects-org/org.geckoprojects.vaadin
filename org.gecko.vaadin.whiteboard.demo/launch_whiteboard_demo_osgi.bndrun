@@ -23,7 +23,6 @@
 	org.apache.felix.http.servlet-api;version='[1.2.0,1.2.1)',\
 	org.apache.felix.scr;version='[2.2.4,2.2.5)',\
 	org.jsoup;version='[1.15.3,1.15.4)',\
-	org.osgi.util.converter;version='[1.0.1,1.0.2)',\
 	org.osgi.util.promise;version='[1.2.0,1.2.1)',\
 	org.osgi.util.pushstream;version='[1.0.2,1.0.3)',\
 	slf4j.api;version='[1.7.36,1.7.37)',\
@@ -66,7 +65,23 @@
 	org.apache.commons.commons-io;version='[2.11.0,2.11.1)',\
 	org.apache.felix.cm.json;version='[1.0.8,1.0.9)',\
 	org.apache.felix.configurator;version='[1.0.16,1.0.17)',\
-	org.apache.sling.commons.johnzon;version='[1.2.14,1.2.15)'
+	org.apache.sling.commons.johnzon;version='[1.2.14,1.2.15)',\
+	com.vaadin.flow.component.combobox;version='[23.3.0,23.3.1)',\
+	com.vaadin.flow.component.customfield;version='[23.3.0,23.3.1)',\
+	com.vaadin.flow.component.datepicker;version='[23.3.0,23.3.1)',\
+	com.vaadin.flow.component.formlayout;version='[23.3.0,23.3.1)',\
+	org.eclipse.emf.common;version='[2.23.0,2.23.1)',\
+	org.eclipse.emf.ecore;version='[2.25.0,2.25.1)',\
+	org.eclipse.emf.ecore.xmi;version='[2.16.0,2.16.1)',\
+	org.gecko.emf.osgi.api;version='[4.5.0,4.5.1)',\
+	org.gecko.emf.osgi.component;version='[4.5.0,4.5.1)',\
+	org.gecko.emf.osgi.example.model.basic;version='[4.5.0,4.5.1)',\
+	org.gecko.vaadin.emf.databinding;version=snapshot,\
+	org.jsr-305;version='[3.0.2,3.0.3)',\
+	org.osgi.service.cm;version='[1.6.0,1.6.1)',\
+	org.osgi.util.converter;version='[1.0.8,1.0.9)',\
+	org.gecko.emf.osgi.extender;version='[4.5.0,4.5.1)',\
+	org.osgi.service.coordinator;version='[1.0.2,1.0.3)'
 
 -runrequires: \
 	bnd.identity;id='slf4j.simple';version:Version='1.7.25',\
@@ -79,7 +94,10 @@
 	bnd.identity;id='org.apache.aries.spifly.dynamic.framework.extension',\
 	bnd.identity;id='org.apache.felix.gogo.command',\
 	bnd.identity;id='org.apache.felix.gogo.shell',\
-	bnd.identity;id='org.apache.felix.http.whiteboard'
--runee: JavaSE-11
+	bnd.identity;id='org.apache.felix.http.whiteboard',\
+	bnd.identity;id='org.gecko.emf.osgi.component',\
+	bnd.identity;id='org.gecko.emf.osgi.example.model.basic',\
+	bnd.identity;id='org.gecko.emf.osgi.extender'
+-runee: JavaSE-17
 #-runvm: -Dorg.eclipse.emf.ecore.EPackage.Registry.INSTANCE=org.eclipse.emf.ecore.impl.org.eclipse.emf.ecore.impl
 -runblacklist: bnd.identity;id='org.osgi.service.http.whiteboard'

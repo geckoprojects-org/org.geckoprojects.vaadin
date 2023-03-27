@@ -26,8 +26,13 @@ Require-Capability: osgi.extender;filter:='(osgi.extender=osgi.configurator)'
 	com.vaadin.flow.component.checkbox;version=latest,\
 	com.vaadin.external.gwt;version=latest,\
 	org.gecko.vaadin.whiteboard.api;version=snapshot,\
+	org.gecko.vaadin.emf.databinding;version=snapshot,\
 	org.osgi.framework,\
-	org.apache.felix.framework
+	org.apache.felix.framework,\
+	com.vaadin.flow.data.renderer,\
+	org.gecko.emf.osgi.example.model.basic,\
+	org.eclipse.emf.ecore,\
+	org.eclipse.emf.common
 
 -includeresource: \
 	OSGI-INF/configurator/=config/,\

@@ -16,6 +16,7 @@ import java.util.Optional;
 import org.gecko.vaadin.demo.views.about.AboutView;
 import org.gecko.vaadin.demo.views.helloworld.HelloWorldView;
 import org.gecko.vaadin.demo.views.map.MapView;
+import org.gecko.vaadin.demo.views.person.PersonFormView;
 import org.gecko.vaadin.whiteboard.annotations.VaadinComponent;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -79,11 +80,9 @@ public class MainView extends AppLayout {
         layout.getThemeList().set("spacing-s", true);
         layout.setAlignItems(FlexComponent.Alignment.STRETCH);
         VerticalLayout logoLayout = new VerticalLayout();
-//        HorizontalLayout logoLayout = new HorizontalLayout();
         logoLayout.setId("logo");
         logoLayout.setAlignItems(FlexComponent.Alignment.CENTER);
         logoLayout.add(new Image("images/CI_CIM.png", "DIMC logo"));
-//        logoLayout.add(new Image("images/logo.png", "My App logo"));
         logoLayout.add(new H1("Vaadin 23 Demo"));
         layout.add(logoLayout, menu);
         return layout;
@@ -102,7 +101,7 @@ public class MainView extends AppLayout {
         return new Tab[]{
         		createTab("Hello World", HelloWorldView.class), 
         		createTab("About", AboutView.class), 
-//        		createTab("Person", PersonFormView.class),
+        		createTab("Person", PersonFormView.class),
         		createTab("Map", MapView.class)};
     }
 

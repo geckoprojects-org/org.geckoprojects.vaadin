@@ -5,7 +5,8 @@
 -library: \
 	geckoDIMC,\
 	geckoOSGi-Test,\
-	geckoJacoco
+	geckoJacoco,\
+	geckoEMF
 
 # Needed because we enabled library 'gecko-dimc' 	
 github-project: org.gecko.vaadin

@@ -1,0 +1,6 @@
+-library: enable-emf
+
+Bundle-Version: 1.0.0.SNAPSHOT
+
+-buildpath: com.vaadin.flow.data,\
+	com.vaadin.flow.server

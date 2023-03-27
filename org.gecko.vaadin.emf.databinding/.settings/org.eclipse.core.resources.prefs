@@ -1,0 +1,12 @@
+eclipse.preferences.version=1
+encoding//.settings/org.eclipse.core.resources.prefs=UTF-8
+encoding//.settings/org.eclipse.jdt.core.prefs=UTF-8
+encoding//.settings/org.eclipse.jdt.ui.prefs=UTF-8
+encoding//src/org/gecko/vaadin/emf/databinding/api/EMFBinder.java=UTF-8
+encoding//src/org/gecko/vaadin/emf/databinding/api/package-info.java=UTF-8
+encoding//src/org/gecko/vaadin/emf/databinding/converter/package-info.java=UTF-8
+encoding//src/test/component/Example.java=UTF-8
+encoding//test/test/component/ExampleTest.java=UTF-8
+encoding/<project>=UTF-8
+encoding/bnd.bnd=UTF-8
+encoding/launch.bndrun=UTF-8

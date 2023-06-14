@@ -1,6 +1,3 @@
-Bundle-Name: Vaadin Whiteboard Demo
-Bundle-Description: Gecko.io Vaadin Whiteboard Demo Application
-Bundle-Version: ${base-version}
 Require-Capability: osgi.extender;filter:='(osgi.extender=osgi.configurator)'
 
 -buildpath: \
@@ -30,18 +27,7 @@ Require-Capability: osgi.extender;filter:='(osgi.extender=osgi.configurator)'
 	org.apache.felix.framework
 
 -includeresource: \
-	OSGI-INF/configurator/=config/,\
 	META-INF/resources=resources,\
 	META-INF/resources=frontend,\
 	META-INF/frontend=frontend
 	 
--privatepackage: \
-	org.gecko.vaadin.demo.service
-	
-Export-Package: \
-	org.gecko.vaadin.demo,\
-	org.gecko.vaadin.demo.views.about,\
-	org.gecko.vaadin.demo.views.helloworld,\
-	org.gecko.vaadin.demo.views.main,\
-	org.gecko.vaadin.demo.views.person,\
-	org.gecko.vaadin.demo.views.map

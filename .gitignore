@@ -2,4 +2,7 @@
 /.gradle/
 generated/
 /.metadata/
-/build/
+target/
+.settings/
+.project
+.classpath

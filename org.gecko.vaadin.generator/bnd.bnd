@@ -1,31 +1,5 @@
--buildpath: \
-	biz.aQute.bndlib,\
-	com.vaadin.external.atmosphere.runtime;version=latest,\
-	com.vaadin.external.gwt;version=latest,\
-	com.vaadin.external.gentyref;version=latest,\
-	com.vaadin.flow.plugin.base;version=latest,\
-	com.vaadin.flow.server;version=latest,\
-	org.apache.commons.commons-io;version=latest,\
-	org.apache.commons.commons-compress;version=latest,\
-	org.apache.httpcomponents.httpcore;version=latest,\
-	org.apache.httpcomponents.httpclient;version=latest,\
-	org.apache.commons.logging;version=latest,\
-	com.google.guava;version=latest,\
-	com.google.guava.failureaccess;version=latest,\
-	com.google.errorprone:error_prone_annotations;version=latest,\
-	com.google.j2objc:j2objc-annotations;version=latest,\
-	org.zeroturnaround:zt-exec;version=latest,\
-	javassist;version=latest,\
-	org.reflections;version=latest,\
-	net.bytebuddy.byte-buddy;version=latest,\
-	org.jsr-305;version=latest,\
-	checker-qual;version=latest,\
-	slf4j.api;version='1.7'
-	
-Bundle-Version: ${base-version}
-
 -includeresource: \
-	@${repo;com.vaadin.flow.server;latest}
+	@flow-server-${flow.version}.jar
 	
 -privatepackage: \
 	org.gecko.vaadin.exporter,\
@@ -48,6 +22,7 @@ Bundle-Version: ${base-version}
 	com.google.common.base,\
 	com.google.common.collect,\
 	org.apache.commons.io,\
+	org.apache.commons.io.function,\
 	org.apache.commons.io.file,\
 	org.apache.commons.io.filefilter,\
 	org.apache.commons.io.output,\
@@ -115,5 +90,4 @@ Bundle-Version: ${base-version}
 	org.apache.http.params,\
 	org.apache.http.client.utils,\
 	org.apache.commons.compress.archivers.zip
-Bundle-Name: Vaadin Bnd Frontend Generator
-Bundle-Description: Gecko Vaadin 23 Frontend Generator for the Vaadin Whiteboard
+	

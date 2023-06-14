@@ -1,0 +1,12 @@
+{
+  ":configurator:resource-version": 1,
+	"VaadinApplication~Vaadin": 
+	{
+		"vaadin.pwa": "Vaadin23",
+		"vaadin.application.description": "OSGi Vaadin23 Application",
+		"vaadin.application.name": "Vaadin23",
+		"vaadin.application.theme": "Material",
+		"vaadin.application.context": "/twentythree",
+		"vaadin.application.frontend": "VITE"
+	}
+}

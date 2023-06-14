@@ -1,0 +1,82 @@
+[INFO] Generating frontend ...
+[INFO]  - Propagate build info ...
+[DEBUG] 
+>>> Running prepare-frontend
+System.properties:
+ productionMode: true
+ webpackPort: null
+ project.basedir: /opt/git/org.gecko.vaadin/org.gecko.vaadin.whiteboard.demo.frontend
+Goal parameters:
+ productionMode: true
+ npmFolder: /opt/git/org.gecko.vaadin/org.gecko.vaadin.whiteboard.demo.frontend
+Token file: /opt/git/org.gecko.vaadin/org.gecko.vaadin.whiteboard.demo.frontend/META-INF/VAADIN/config/flow-build-info.json
+Token content: {"productionMode":true,"useDeprecatedV14Bootstrapping":false,"eagerServerLoad":false,"npmFolder":"/opt/git/org.gecko.vaadin/org.gecko.vaadin.whiteboard.demo.frontend","node.version":"v18.16.0","node.download.root":"https://nodejs.org/dist/","generatedFolder":"/opt/git/org.gecko.vaadin/org.gecko.vaadin.whiteboard.demo.frontend/generated/frontend","frontendFolder":"/opt/git/org.gecko.vaadin/org.gecko.vaadin.whiteboard.demo.frontend/frontend","connect.javaSourceFolder":"/opt/git/org.gecko.vaadin/org.gecko.vaadin.whiteboard.demo.frontend/src","javaResourceFolder":"/opt/git/org.gecko.vaadin/org.gecko.vaadin.whiteboard.demo.frontend/resources","connect.applicationProperties":"/opt/git/org.gecko.vaadin/org.gecko.vaadin.whiteboard.demo.frontend/res/application.properties","connect.openApiFile":"/generated-resources/openapi.json","project.frontend.generated":"/opt/git/org.gecko.vaadin/org.gecko.vaadin.whiteboard.demo.frontend/frontend/generated","pnpm.enable":false,"require.home.node":false,"build.folder":"generated"}
+
+[INFO]  - Prepare frontend ...
+[INFO] Getting class finder
+[INFO]  - Update build fileFrontend ...
+[INFO]  - Run node updater ...
+[ERROR] Error generating Vaadin Frontend Error occured during goal execution: Scanner TypeAnnotationsScanner was not configuredPlease run Maven with the -e switch (or Gradle with the --stacktrace switch), to learn the full stack trace.
+com.vaadin.flow.server.ExecutionFailedException: Error occured during goal execution: Scanner TypeAnnotationsScanner was not configuredPlease run Maven with the -e switch (or Gradle with the --stacktrace switch), to learn the full stack trace.
+	at com.vaadin.flow.plugin.base.BuildFrontendUtil.runNodeUpdater(BuildFrontendUtil.java:349)
+	at org.gecko.vaadin.generator.VaadinNPMGenerator.doGenerate(VaadinNPMGenerator.java:130)
+	at org.gecko.vaadin.generator.VaadinNPMGenerator.generate(VaadinNPMGenerator.java:85)
+	at org.gecko.vaadin.generator.VaadinNPMGenerator.generate(VaadinNPMGenerator.java:62)
+	at aQute.bnd.build.ProjectGenerate.lambda$doGeneratePlugin$1(ProjectGenerate.java:270)
+	at aQute.lib.redirect.Redirect.apply(Redirect.java:117)
+	at aQute.bnd.build.ProjectGenerate.lambda$doGeneratePlugin$2(ProjectGenerate.java:270)
+	at aQute.bnd.build.WorkspaceExternalPluginHandler.call(WorkspaceExternalPluginHandler.java:95)
+	at aQute.bnd.build.ProjectGenerate.doGeneratePlugin(ProjectGenerate.java:255)
+	at aQute.bnd.build.ProjectGenerate.doGenerate(ProjectGenerate.java:226)
+	at aQute.bnd.build.ProjectGenerate.step(ProjectGenerate.java:146)
+	at aQute.bnd.build.ProjectGenerate.generate(ProjectGenerate.java:66)
+	at aQute.bnd.maven.generate.plugin.GenerateMojo.lambda$getOperation$2(GenerateMojo.java:154)
+	at aQute.bnd.maven.generate.plugin.BndContainer.generate(BndContainer.java:169)
+	at aQute.bnd.maven.generate.plugin.GenerateMojo.execute(GenerateMojo.java:136)
+	at org.apache.maven.plugin.DefaultBuildPluginManager.executeMojo(DefaultBuildPluginManager.java:137)
+	at org.apache.maven.lifecycle.internal.MojoExecutor.doExecute2(MojoExecutor.java:370)
+	at org.apache.maven.lifecycle.internal.MojoExecutor.doExecute(MojoExecutor.java:351)
+	at org.apache.maven.lifecycle.internal.MojoExecutor.execute(MojoExecutor.java:215)
+	at org.apache.maven.lifecycle.internal.MojoExecutor.execute(MojoExecutor.java:171)
+	at org.apache.maven.lifecycle.internal.MojoExecutor.execute(MojoExecutor.java:163)
+	at org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject(LifecycleModuleBuilder.java:117)
+	at org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject(LifecycleModuleBuilder.java:81)
+	at org.apache.maven.lifecycle.internal.builder.singlethreaded.SingleThreadedBuilder.build(SingleThreadedBuilder.java:56)
+	at org.apache.maven.lifecycle.internal.LifecycleStarter.execute(LifecycleStarter.java:128)
+	at org.apache.maven.DefaultMaven.doExecute(DefaultMaven.java:294)
+	at org.apache.maven.DefaultMaven.doExecute(DefaultMaven.java:192)
+	at org.apache.maven.DefaultMaven.execute(DefaultMaven.java:105)
+	at org.apache.maven.cli.MavenCli.execute(MavenCli.java:960)
+	at org.apache.maven.cli.MavenCli.doMain(MavenCli.java:293)
+	at org.apache.maven.cli.MavenCli.main(MavenCli.java:196)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.codehaus.plexus.classworlds.launcher.Launcher.launchEnhanced(Launcher.java:282)
+	at org.codehaus.plexus.classworlds.launcher.Launcher.launch(Launcher.java:225)
+	at org.codehaus.plexus.classworlds.launcher.Launcher.mainWithExitCode(Launcher.java:406)
+	at org.codehaus.plexus.classworlds.launcher.Launcher.main(Launcher.java:347)
+Caused by: org.reflections.ReflectionsException: Scanner TypeAnnotationsScanner was not configured
+	at org.reflections.Store.get(Store.java:39)
+	at org.reflections.Store.get(Store.java:61)
+	at org.reflections.Store.get(Store.java:46)
+	at org.reflections.Reflections.getTypesAnnotatedWith(Reflections.java:429)
+	at org.gecko.vaadin.generator.GeneratorClassFinder.getAnnotatedClasses(GeneratorClassFinder.java:33)
+	at com.vaadin.flow.server.frontend.scanner.ClassFinder$CachedClassFinder.lambda$getAnnotatedClasses$0(ClassFinder.java:148)
+	at java.base/java.util.HashMap.computeIfAbsent(HashMap.java:1220)
+	at com.vaadin.flow.server.frontend.scanner.ClassFinder$CachedClassFinder.getAnnotatedClasses(ClassFinder.java:147)
+	at com.vaadin.flow.server.frontend.scanner.FrontendDependencies.computeEndpoints(FrontendDependencies.java:270)
+	at com.vaadin.flow.server.frontend.scanner.FrontendDependencies.<init>(FrontendDependencies.java:130)
+	at com.vaadin.flow.server.frontend.scanner.FrontendDependenciesScanner$FrontendDependenciesScannerFactory.createScanner(FrontendDependenciesScanner.java:130)
+	at com.vaadin.flow.server.frontend.scanner.FrontendDependenciesScanner$FrontendDependenciesScannerFactory.createScanner(FrontendDependenciesScanner.java:92)
+	at com.vaadin.flow.server.frontend.NodeTasks.<init>(NodeTasks.java:109)
+	at com.vaadin.flow.plugin.base.BuildFrontendUtil.runNodeUpdater(BuildFrontendUtil.java:343)
+	... 38 more
+[INFO] Doing cleanup ...
+[INFO] Removed file vite.config.ts
+[INFO] Removed file vite.generated.ts
+[INFO] Removed file package.json
+[INFO] Removed folder generated/frontend/
+[INFO] Removed folder frontend/
+[INFO] Finished cleanup

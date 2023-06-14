@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+	    <groupId>org.geckoprojects.vaadin</groupId>
+	    <artifactId>parent</artifactId>
+	    <version>1.0.0-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+    
+	<artifactId>org.gecko.vaadin.whiteboard.demo.frontend</artifactId>
+	<name>Gecko Vaadin Whiteboard Demo Frontend Fragment</name>
+	<description>Gecko Vaadin Whiteboard Demo Frontend Fragment for Vaadin 23</description>
+    
+	<dependencies>
+		<dependency>
+			<groupId>org.geckoprojects.vaadin</groupId>
+			<artifactId>org.gecko.vaadin.whiteboard.api</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.geckoprojects.vaadin</groupId>
+			<artifactId>org.gecko.vaadin.whiteboard.demo</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>flow-server</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>flow-html-components</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>flow-client</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>flow-data</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>flow-dnd</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>flow-lit-template</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>flow-polymer-template</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>vaadin-button-flow</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>vaadin-lumo-theme</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>vaadin-material-theme</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>vaadin-ordered-layout-flow</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>vaadin-notification-flow</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>vaadin-text-field-flow</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>vaadin-app-layout-flow</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>vaadin-tabs-flow</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>vaadin-avatar-flow</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>osgi.core</artifactId>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>biz.aQute.bnd</groupId>
+				<artifactId>bnd-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>jar</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+						<configuration>
+							<bnd><![CDATA[
+							Fragment-Host: org.gecko.vaadin.whiteboard.demo
+							-includeresource: META-INF/VAADIN=META-INF/VAADIN
+							-dependson: \
+								org.gecko.vaadin.generator,\
+								org.gecko.vaadin.whiteboard,\
+								org.gecko.vaadin.whiteboard.demo
+							-privatepackage: org.gecko.vaadin.whiteboard.demo.frontend
+							]]></bnd>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>biz.aQute.bnd</groupId>
+				<artifactId>bnd-generate-maven-plugin</artifactId>
+				<configuration>
+					<externalPlugins>
+						<dependency>
+							<groupId>org.geckoprojects.vaadin</groupId>
+							<artifactId>org.gecko.vaadin.generator</artifactId>
+							<version>1.0.0-SNAPSHOT</version>
+						</dependency>
+					</externalPlugins>
+					<steps>
+						<step>
+							<generateCommand>geckoVaadinNPM</generateCommand>
+							<output>META-INF/VAADIN</output>
+							<properties>
+								<cleanup>ALL</cleanup>
+							</properties>
+						</step>
+					</steps>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>bnd-generate</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	
+</project>

@@ -1,42 +1,42 @@
--buildpath: \
-	org.osgi.framework;version=latest,\
-	org.osgi.namespace.implementation;version=latest,\
-	org.osgi.resource;version=latest,\
-	org.osgi.util.tracker;version=latest,\
-	org.osgi.util.pushstream;version=latest,\
-	org.osgi.util.function;version=latest,\
-	org.osgi.util.promise;version=latest,\
-	org.osgi.service.cm;version=latest,\
-	org.osgi.service.http.whiteboard;version=latest,\
-	org.osgi.service.component;version=latest,\
-	biz.aQute.bnd.annotation;version=latest,\
-	slf4j.api;version=latest,\
-	org.apache.felix.http.servlet-api;version=latest,\
-	com.vaadin.external.gentyref;version=latest,\
-	com.vaadin.flow.server;version=latest,\
-	com.vaadin.flow.data;version=latest,\
-	com.vaadin.flow.push;version=latest,\
-	com.vaadin.flow.html.components;version=latest,\
-	com.vaadin.flow.client;version=latest,\
-	com.vaadin.flow.component.button;version=latest,\
-	org.gecko.vaadin.whiteboard.api;version=snapshot
-	
--baseline: *
+#-buildpath: \
+#	org.osgi.framework;version=latest,\
+#	org.osgi.namespace.implementation;version=latest,\
+#	org.osgi.resource;version=latest,\
+#	org.osgi.util.tracker;version=latest,\
+#	org.osgi.util.pushstream;version=latest,\
+#	org.osgi.util.function;version=latest,\
+#	org.osgi.util.promise;version=latest,\
+#	org.osgi.service.cm;version=latest,\
+#	org.osgi.service.http.whiteboard;version=latest,\
+#	org.osgi.service.component;version=latest,\
+#	biz.aQute.bnd.annotation;version=latest,\
+#	slf4j.api;version=latest,\
+#	org.apache.felix.http.servlet-api;version=latest,\
+#	com.vaadin.external.gentyref;version=latest,\
+#	com.vaadin.flow.server;version=latest,\
+#	com.vaadin.flow.data;version=latest,\
+#	com.vaadin.flow.push;version=latest,\
+#	com.vaadin.flow.html.components;version=latest,\
+#	com.vaadin.flow.client;version=latest,\
+#	com.vaadin.flow.component.button;version=latest,\
+#	org.gecko.vaadin.whiteboard.api;version=snapshot
+#	
+#-baseline: *
 
-Bundle-Version: ${base-version}
-Bundle-Name: Vaadin Whiteboard
-Bundle-Description: Gecko.io Vaadin OSGi Whiteboard for Vaadin 23
+#Bundle-Version: ${base-version}
+#Bundle-Name: Vaadin Whiteboard
+#Bundle-Description: Gecko.io Vaadin OSGi Whiteboard for Vaadin 23
 
-DynamicImport-Package: *
+#DynamicImport-Package: *
 	
--privatepackage: \
-	org.gecko.vaadin.whiteboard.spi,\
-	org.gecko.vaadin.whiteboard.initializer,\
-	org.gecko.vaadin.whiteboard.servlet,\
-	org.gecko.vaadin.whiteboard.di,\
-	org.gecko.vaadin.whiteboard.push,\
-	org.gecko.vaadin.whiteboard.registry
+#-privatepackage: \
+#	org.gecko.vaadin.whiteboard.spi,\
+#	org.gecko.vaadin.whiteboard.initializer,\
+#	org.gecko.vaadin.whiteboard.servlet,\
+#	org.gecko.vaadin.whiteboard.di,\
+#	org.gecko.vaadin.whiteboard.push,\
+#	org.gecko.vaadin.whiteboard.registry
 	
-Export-Package: \
-	org.gecko.vaadin.whiteboard.annotations,\
-	org.gecko.vaadin.whiteboard
+#Export-Package: \
+#	org.gecko.vaadin.whiteboard.annotations,\
+#	org.gecko.vaadin.whiteboard

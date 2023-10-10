@@ -109,7 +109,7 @@ public class OSGiServiceInstantiator extends DefaultInstantiator implements Sess
 		Object oldObject = session.getAttribute(attributeKey);
 		List<String> instances = (List<String>) session.getAttribute(INSTANCE_LIST);
 		if (oldObject != null) {
-			logger.info("Released OSGi service object instance of type " + clazzName + " for session " + session);
+			logger.info("Released OSGi service object instance of type " + clazzName + " for instance: " + oldObject + " and session: " + session);
 			serviceObjectRegistry.releaseInstance(oldObject);
 			synchronized (session) {
 				session.setAttribute(attributeKey, null);
@@ -132,7 +132,7 @@ public class OSGiServiceInstantiator extends DefaultInstantiator implements Sess
 		}
 		String attributeKey = String.format(INSTANCE_CLASS, clazzName);
 		List<String> instances = (List<String>) session.getAttribute(INSTANCE_LIST);
-		logger.info("Get or created OSGi service object instance of type " + clazzName + " for session " + session);
+		logger.info("Get or created OSGi service object instance of type " + clazzName + " for instance: " + instance + " and session: " + session);
 		if (instances == null) {
 			instances = new LinkedList<String>();
 			session.setAttribute(INSTANCE_LIST, instances);

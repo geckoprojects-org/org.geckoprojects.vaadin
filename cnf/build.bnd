@@ -9,7 +9,7 @@
 
 # Needed because we enabled library 'gecko-dimc' 	
 github-project: org.gecko.vaadin
-base-version: 2.0.0.SNAPSHOT
+base-version: 2.0.0
 mvn-base-version: ${versionmask;===s;${base-version}}
 
 # Maven Central Group-Id

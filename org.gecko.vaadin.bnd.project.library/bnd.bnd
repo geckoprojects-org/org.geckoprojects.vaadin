@@ -1,0 +1,41 @@
+
+icondata: data:image/gif;base64,${base64;icon.gif}
+category: ccc/Gecko OSGi Standard Templates
+
+dataurl: data:image/gif;base64
+gecko-icon: ${dataurl},${base64;icons/gecko.ico}
+
+project-template-vaadin:\
+	org.bndtools.template; org.bndtools.template=project;\
+		name=Gecko Vaadin Example;\
+		category=${category};\
+		ranking:Double=1001;\
+		dir=templates/vaadin;\
+		icon="${gecko-icon}";\
+		help=vaadin.xml;\
+		engine=mustache;\
+		metaType=vaadin-metatype.xml
+		
+project-template-vaadin-frontend:\
+	org.bndtools.template; org.bndtools.template=project;\
+		name=Gecko Vaadin Frontend Example;\
+		category=${category};\
+		ranking:Double=1001;\
+		dir=templates/vaadin-frontend;\
+		icon="${gecko-icon}";\
+		help=vaadin-frontend.xml;\
+		engine=mustache;\
+		metaType=vaadin-frontend-metatype.xml
+		
+gecko-project:\
+    bnd.library;\
+        bnd.library     		= enableVaadin; \
+        path            		= library
+
+Provide-Capability: \
+	${gecko-project},\
+	${project-template-vaadin},\
+	${project-template-vaadin-frontend}
+
+-resourceonly: true
+-includeresource: resources

@@ -1,0 +1,16 @@
+-require-bnd: "(version>=6.4.0)"
+
+-buildpath.vaadin: ${vaadin.lib}
+
+vaadin.lib: \
+	com.vaadin.flow.server,\
+	org.gecko.vaadin.whiteboard.api,\
+	com.vaadin.flow.component.orderedlayout,\
+	com.vaadin.flow.component.applayout,\
+	com.vaadin.flow.component.button,\
+	com.vaadin.flow.component.tabs,\
+	com.vaadin.flow.html.components,\
+	com.vaadin.flow.component.avatar,\
+	com.vaadin.flow.component.textfield,\
+	com.vaadin.flow.component.shared,\
+	com.vaadin.flow.component.notification

@@ -1,0 +1,17 @@
+Bundle-Name: Gecko Vaadin Whiteboard bnd Library
+Bundle-Description: Vaadin Dependencies for the Gecko Vaadin Whiteboard
+Bundle-Version: ${base-version}
+
+-resourceonly: true
+-sources: false
+
+-includeresource: resources,\
+	{library/workspace/gecko-vaadin.mvn=resources/library/workspace/gecko-vaadin.mvn}
+
+Provide-Capability: \
+	${gecko-base}
+
+gecko-base:\
+    bnd.library;\
+        bnd.library     		= geckoVaadin; \
+        path            		= library/workspace
